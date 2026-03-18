@@ -1,0 +1,100 @@
+{
+  "home": {
+    "title": "Bingo Musical",
+    "subtitle": "El bingo que sona",
+    "createGame": "Crear partida",
+    "joinGame": "Unir-se a una partida"
+  },
+  "create": {
+    "title": "Crear partida",
+    "selectPlaylist": "Selecciona una llista de reproducció",
+    "presets": "Llistes destacades",
+    "search": "Cerca a Spotify",
+    "searchPlaceholder": "Cerca una llista de reproducció...",
+    "pasteUrl": "O enganxa l'enllaç de Spotify",
+    "urlPlaceholder": "https://open.spotify.com/playlist/...",
+    "boardSize": "Mida del cartró",
+    "boardSize3": "3×3 (9 cançons)",
+    "boardSize4": "4×4 (16 cançons)",
+    "boardSize5": "5×5 (25 cançons)",
+    "yourAlias": "El teu nom",
+    "aliasPlaceholder": "Com et dius?",
+    "createButton": "Crear partida",
+    "tracksWithPreview": "{{count}} cançons amb previsualització",
+    "notEnoughTracksWarning": "Aquesta llista només té {{count}} cançons amb previsualització disponible. Necessites almenys {{needed}} per a un cartró {{size}}×{{size}}.",
+    "selectedPlaylist": "Llista seleccionada",
+    "changePlaylist": "Canviar llista",
+    "step1": "Tria llista",
+    "step2": "Configura la partida"
+  },
+  "join": {
+    "title": "Unir-se a una partida",
+    "codeLabel": "Codi de partida",
+    "codePlaceholder": "Ex: XK3D9F",
+    "aliasLabel": "El teu nom",
+    "aliasPlaceholder": "Com et dius?",
+    "joinButton": "Unir-se",
+    "verifyingCode": "Verificant codi..."
+  },
+  "lobby": {
+    "waitingForPlayers": "Esperant jugadors...",
+    "shareCode": "Comparteix aquest codi",
+    "copyCode": "Copiar codi",
+    "codeCopied": "Copiat!",
+    "players": "Jugadors",
+    "startGame": "Començar partida!",
+    "waitingForHost": "Esperant que el host iniciï la partida...",
+    "youAreHost": "Ets el host",
+    "playlistLabel": "Llista de reproducció"
+  },
+  "game": {
+    "nowPlaying": "Sonant ara",
+    "nextTrack": "Següent cançó",
+    "noMoreTracks": "No hi ha més cançons",
+    "markInstruction": "Toca si la tens al cartró",
+    "cannotMark": "Aquesta cançó encara no ha sonat",
+    "line": "Línia!",
+    "bingo": "BINGO!",
+    "claimLine": "Cantar línia",
+    "claimBingo": "Cantar BINGO!",
+    "tracksPlayed": "Cançons reproduïdes",
+    "players": "Jugadors",
+    "endGame": "Finalitzar partida",
+    "confirmEndGame": "Segur que vols finalitzar la partida?",
+    "history": "Historial",
+    "boardTitle": "El teu cartró",
+    "hasLine": "Línia!",
+    "hasBingo": "BINGO!",
+    "audioError": "Error en reproduir l'àudio"
+  },
+  "results": {
+    "winner": "Tenim guanyador!",
+    "winners": "Tenim guanyadors!",
+    "gameOver": "Fi de la partida",
+    "playAgain": "Jugar una altra vegada",
+    "backHome": "Tornar a l'inici",
+    "yourBoard": "El teu cartró final",
+    "markedTracks": "Cançons marcades",
+    "totalPlayed": "Cançons reproduïdes"
+  },
+  "errors": {
+    "gameNotFound": "Partida no trobada",
+    "gameAlreadyStarted": "La partida ja ha començat",
+    "gameFinished": "Aquesta partida ja ha acabat",
+    "aliasTaken": "Aquest nom ja està en ús en aquesta partida",
+    "invalidUrl": "Enllaç de Spotify no vàlid",
+    "notEnoughTracks": "La llista no té prou cançons amb previsualització",
+    "codeCollision": "Error en generar el codi, torna-ho a provar",
+    "generic": "Alguna cosa ha anat malament. Torna-ho a provar."
+  },
+  "common": {
+    "loading": "Carregant...",
+    "back": "Tornar",
+    "cancel": "Cancel·lar",
+    "confirm": "Confirmar",
+    "yes": "Sí",
+    "no": "No",
+    "by": "per",
+    "tracks": "cançons"
+  }
+}

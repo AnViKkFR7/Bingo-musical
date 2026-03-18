@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  text-align: center;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+.codeBox {
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-8);
+}
+
+.code {
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: monospace;
+}
+
+.copyBtn {
+  min-width: 160px;
+}

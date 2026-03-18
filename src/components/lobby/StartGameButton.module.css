@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.error {
+  color: var(--color-danger);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin: 0;
+}

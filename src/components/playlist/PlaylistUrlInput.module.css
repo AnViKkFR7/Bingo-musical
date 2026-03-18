@@ -1,0 +1,18 @@
+.section {
+  margin-bottom: var(--space-6);
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-3);
+}
+
+.error {
+  color: var(--color-danger);
+  font-size: 0.875rem;
+  margin-top: var(--space-2);
+}

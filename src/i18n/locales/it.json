@@ -1,0 +1,100 @@
+{
+  "home": {
+    "title": "Bingo Musicale",
+    "subtitle": "Il bingo che suona",
+    "createGame": "Crea partita",
+    "joinGame": "Unisciti a una partita"
+  },
+  "create": {
+    "title": "Crea partita",
+    "selectPlaylist": "Seleziona una playlist",
+    "presets": "Playlist in evidenza",
+    "search": "Cerca su Spotify",
+    "searchPlaceholder": "Cerca una playlist...",
+    "pasteUrl": "Oppure incolla il link di Spotify",
+    "urlPlaceholder": "https://open.spotify.com/playlist/...",
+    "boardSize": "Dimensione della cartella",
+    "boardSize3": "3×3 (9 canzoni)",
+    "boardSize4": "4×4 (16 canzoni)",
+    "boardSize5": "5×5 (25 canzoni)",
+    "yourAlias": "Il tuo nome",
+    "aliasPlaceholder": "Come ti chiami?",
+    "createButton": "Crea partita",
+    "tracksWithPreview": "{{count}} canzoni con anteprima",
+    "notEnoughTracksWarning": "Questa playlist ha solo {{count}} canzoni con anteprima disponibile. Ne servono almeno {{needed}} per una cartella {{size}}×{{size}}.",
+    "selectedPlaylist": "Playlist selezionata",
+    "changePlaylist": "Cambia playlist",
+    "step1": "Scegli playlist",
+    "step2": "Configura la partita"
+  },
+  "join": {
+    "title": "Unisciti a una partita",
+    "codeLabel": "Codice partita",
+    "codePlaceholder": "Es.: XK3D9F",
+    "aliasLabel": "Il tuo nome",
+    "aliasPlaceholder": "Come ti chiami?",
+    "joinButton": "Unisciti",
+    "verifyingCode": "Verifica del codice..."
+  },
+  "lobby": {
+    "waitingForPlayers": "In attesa di giocatori...",
+    "shareCode": "Condividi questo codice",
+    "copyCode": "Copia codice",
+    "codeCopied": "Copiato!",
+    "players": "Giocatori",
+    "startGame": "Inizia la partita!",
+    "waitingForHost": "In attesa che il host avvii la partita...",
+    "youAreHost": "Sei il host",
+    "playlistLabel": "Playlist"
+  },
+  "game": {
+    "nowPlaying": "In riproduzione",
+    "nextTrack": "Canzone successiva",
+    "noMoreTracks": "Non ci sono altre canzoni",
+    "markInstruction": "Tocca se ce l'hai nella cartella",
+    "cannotMark": "Questa canzone non è ancora stata riprodotta",
+    "line": "Linea!",
+    "bingo": "BINGO!",
+    "claimLine": "Cantare linea",
+    "claimBingo": "Cantare BINGO!",
+    "tracksPlayed": "Canzoni riprodotte",
+    "players": "Giocatori",
+    "endGame": "Termina partita",
+    "confirmEndGame": "Sei sicuro di voler terminare la partita?",
+    "history": "Cronologia",
+    "boardTitle": "La tua cartella",
+    "hasLine": "Linea!",
+    "hasBingo": "BINGO!",
+    "audioError": "Errore nella riproduzione audio"
+  },
+  "results": {
+    "winner": "Abbiamo un vincitore!",
+    "winners": "Abbiamo dei vincitori!",
+    "gameOver": "Fine della partita",
+    "playAgain": "Gioca ancora",
+    "backHome": "Torna alla home",
+    "yourBoard": "La tua cartella finale",
+    "markedTracks": "Canzoni segnate",
+    "totalPlayed": "Canzoni riprodotte"
+  },
+  "errors": {
+    "gameNotFound": "Partita non trovata",
+    "gameAlreadyStarted": "La partita è già iniziata",
+    "gameFinished": "Questa partita è già terminata",
+    "aliasTaken": "Questo nome è già in uso in questa partita",
+    "invalidUrl": "Link Spotify non valido",
+    "notEnoughTracks": "La playlist non ha abbastanza canzoni con anteprima",
+    "codeCollision": "Errore nella generazione del codice, riprova",
+    "generic": "Qualcosa è andato storto. Riprova."
+  },
+  "common": {
+    "loading": "Caricamento...",
+    "back": "Indietro",
+    "cancel": "Annulla",
+    "confirm": "Conferma",
+    "yes": "Sì",
+    "no": "No",
+    "by": "di",
+    "tracks": "canzoni"
+  }
+}

@@ -1,0 +1,111 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+}
+
+.emptyText {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.counter {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.trackInfo {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.albumArt {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+  box-shadow: var(--shadow-md);
+}
+
+.albumArtPlaceholder {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-md);
+  font-size: 2rem;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  overflow: hidden;
+}
+
+.trackName {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.artist {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.album {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.progressBar {
+  height: 4px;
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}

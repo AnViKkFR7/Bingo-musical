@@ -1,0 +1,304 @@
+/* ============================================================
+   BINGO MUSICAL — CSS Global (variables, reset, base)
+   ============================================================ */
+
+/* ── Variables de diseño ─────────────────────────────────── */
+:root {
+  /* Paleta principal (morado/fucsia) */
+  --color-brand-50:  #fdf4ff;
+  --color-brand-100: #fae8ff;
+  --color-brand-200: #f0abfc;
+  --color-brand-300: #e879f9;
+  --color-brand-400: #d946ef;
+  --color-brand-500: #a21caf;
+  --color-brand-600: #86198f;
+  --color-brand-700: #701a75;
+  --color-brand-800: #4a044e;
+  --color-brand-900: #3b0764;
+
+  /* Neutros */
+  --color-bg:        #0f0f1a;
+  --color-surface:   #1a1a2e;
+  --color-surface-2: #222240;
+  --color-border:    #2e2e50;
+  --color-text:      #f0e6ff;
+  --color-text-muted: #a094b8;
+
+  /* Semánticos */
+  --color-success:   #22c55e;
+  --color-warning:   #f59e0b;
+  --color-error:     #ef4444;
+  --color-info:      #3b82f6;
+
+  /* Celda del cartón */
+  --cell-normal:     var(--color-surface-2);
+  --cell-played:     #2a2a4a;
+  --cell-marked:     var(--color-brand-700);
+  --cell-marked-bg:  rgba(162, 28, 175, 0.25);
+
+  /* Tipografía */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-size-xs:   0.75rem;
+  --font-size-sm:   0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg:   1.125rem;
+  --font-size-xl:   1.25rem;
+  --font-size-2xl:  1.5rem;
+  --font-size-3xl:  1.875rem;
+  --font-size-4xl:  2.25rem;
+
+  /* Espaciado */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Radios */
+  --radius-sm:  0.25rem;
+  --radius-md:  0.5rem;
+  --radius-lg:  0.75rem;
+  --radius-xl:  1rem;
+  --radius-full: 9999px;
+
+  /* Sombras */
+  --shadow-sm:  0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md:  0 4px 12px rgba(0,0,0,0.5);
+  --shadow-lg:  0 8px 24px rgba(0,0,0,0.6);
+  --shadow-brand: 0 0 20px rgba(162, 28, 175, 0.4);
+
+  /* Transiciones */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+}
+
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+}
+
+input, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* ── Utilidades base ─────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ── Botones base ────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  transition: background-color var(--transition-fast),
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary {
+  background: var(--color-teal);
+  color: var(--color-dark);
+  box-shadow: var(--shadow-teal);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #1bf0dc;
+  box-shadow: 0 0 28px rgba(20, 218, 201, 0.55);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-text);
+  border: 2px solid var(--color-cream);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(255, 252, 242, 0.08);
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background: var(--color-red);
+  color: #fff;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #ff2a4a;
+  box-shadow: var(--shadow-red);
+  transform: translateY(-2px);
+}
+
+.btn-sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+}
+
+.btn-lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--font-size-lg);
+}
+
+/* ── Inputs base ─────────────────────────────────────────── */
+.input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(20, 218, 201, 0.2);
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* ── Cards ───────────────────────────────────────────────── */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+}
+
+/* ── Animaciones ─────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes winner {
+  0%   { transform: scale(1);    filter: brightness(1); }
+  100% { transform: scale(1.05); filter: brightness(1.2); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-in  { animation: fadeIn  0.4s ease-in-out; }
+.animate-slide-up { animation: slideUp 0.4s ease-out; }
+.animate-pulse    { animation: pulse   1.5s ease-in-out infinite; }
+.animate-winner   { animation: winner  1s ease-in-out infinite alternate; }
+.animate-spin     { animation: spin    1s linear infinite; }
+
+/* ── Loading spinner ─────────────────────────────────────── */
+.spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-teal);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+/* ── Scrollbar personalizada ─────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-teal);
+}

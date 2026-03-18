@@ -1,0 +1,100 @@
+{
+  "home": {
+    "title": "Musical Bingo",
+    "subtitle": "The bingo that plays",
+    "createGame": "Create game",
+    "joinGame": "Join a game"
+  },
+  "create": {
+    "title": "Create game",
+    "selectPlaylist": "Select a playlist",
+    "presets": "Featured playlists",
+    "search": "Search on Spotify",
+    "searchPlaceholder": "Search for a playlist...",
+    "pasteUrl": "Or paste a Spotify link",
+    "urlPlaceholder": "https://open.spotify.com/playlist/...",
+    "boardSize": "Board size",
+    "boardSize3": "3×3 (9 songs)",
+    "boardSize4": "4×4 (16 songs)",
+    "boardSize5": "5×5 (25 songs)",
+    "yourAlias": "Your name",
+    "aliasPlaceholder": "What's your name?",
+    "createButton": "Create game",
+    "tracksWithPreview": "{{count}} songs with preview",
+    "notEnoughTracksWarning": "This playlist only has {{count}} songs with a preview available. You need at least {{needed}} for a {{size}}×{{size}} board.",
+    "selectedPlaylist": "Selected playlist",
+    "changePlaylist": "Change playlist",
+    "step1": "Choose playlist",
+    "step2": "Configure game"
+  },
+  "join": {
+    "title": "Join a game",
+    "codeLabel": "Game code",
+    "codePlaceholder": "E.g.: XK3D9F",
+    "aliasLabel": "Your name",
+    "aliasPlaceholder": "What's your name?",
+    "joinButton": "Join",
+    "verifyingCode": "Verifying code..."
+  },
+  "lobby": {
+    "waitingForPlayers": "Waiting for players...",
+    "shareCode": "Share this code",
+    "copyCode": "Copy code",
+    "codeCopied": "Copied!",
+    "players": "Players",
+    "startGame": "Start game!",
+    "waitingForHost": "Waiting for the host to start the game...",
+    "youAreHost": "You are the host",
+    "playlistLabel": "Playlist"
+  },
+  "game": {
+    "nowPlaying": "Now playing",
+    "nextTrack": "Next song",
+    "noMoreTracks": "No more songs",
+    "markInstruction": "Tap if you have it on your board",
+    "cannotMark": "This song hasn't played yet",
+    "line": "Line!",
+    "bingo": "BINGO!",
+    "claimLine": "Call line",
+    "claimBingo": "Call BINGO!",
+    "tracksPlayed": "Songs played",
+    "players": "Players",
+    "endGame": "End game",
+    "confirmEndGame": "Are you sure you want to end the game?",
+    "history": "History",
+    "boardTitle": "Your board",
+    "hasLine": "Line!",
+    "hasBingo": "BINGO!",
+    "audioError": "Error playing audio"
+  },
+  "results": {
+    "winner": "We have a winner!",
+    "winners": "We have winners!",
+    "gameOver": "Game over",
+    "playAgain": "Play again",
+    "backHome": "Back to home",
+    "yourBoard": "Your final board",
+    "markedTracks": "Marked songs",
+    "totalPlayed": "Songs played"
+  },
+  "errors": {
+    "gameNotFound": "Game not found",
+    "gameAlreadyStarted": "The game has already started",
+    "gameFinished": "This game has already ended",
+    "aliasTaken": "This name is already in use in this game",
+    "invalidUrl": "Invalid Spotify link",
+    "notEnoughTracks": "The playlist doesn't have enough songs with a preview",
+    "codeCollision": "Error generating code, please try again",
+    "generic": "Something went wrong. Please try again."
+  },
+  "common": {
+    "loading": "Loading...",
+    "back": "Back",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "by": "by",
+    "tracks": "songs"
+  }
+}
