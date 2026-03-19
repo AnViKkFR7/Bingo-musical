@@ -70,6 +70,9 @@ web_modules/
 .env.*
 !.env.example
 
+# Database schema dumps — contain full table structure and RLS policies
+bingo_musical_schema.sql
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache

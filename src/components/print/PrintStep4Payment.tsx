@@ -23,6 +23,8 @@ const DESIGN_LABELS: Record<DesignId, string> = {
   festivo: 'Festivo 🎉',
   retro:   'Retro 💻',
   verde:   'Verde ⚽',
+  noche:   'Noche 🌙',
+  papel:   'Papel 📜',
 }
 
 export function PrintStep4Payment({
