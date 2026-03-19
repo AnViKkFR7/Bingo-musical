@@ -150,7 +150,11 @@ export function CreateGamePage() {
       if (playerErr || !player) throw playerErr ?? new Error('no_player')
 
       // 4. Actualizar host_player_id
-      await supabase.from('games').update({ host_player_id: player.id }).eq('id', game.id)
+      const { error: hostUpdateErr } = await supabase
+        .from('games')
+        .update({ host_player_id: player.id })
+        .eq('id', game.id)
+      if (hostUpdateErr) throw hostUpdateErr
 
       // 5. Insertar cartón vacío (track_positions se rellenan al iniciar)
       const { data: board, error: boardErr } = await supabase

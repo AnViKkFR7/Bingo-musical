@@ -18,7 +18,7 @@ export function StartGameButton({
   minPlayers = 1,
 }: Props) {
   const { t } = useTranslation()
-  const { players } = useGameStore()
+  const { players, currentPlayer } = useGameStore()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -33,16 +33,23 @@ export function StartGameButton({
       const { error: fnErr } = await supabase.functions.invoke('game-start', {
         body: { game_id: gameId },
       })
-      if (fnErr) throw fnErr
+      if (fnErr) {
+        console.error('[game-start] error:', fnErr)
+        throw fnErr
+      }
       // La navegación la gestiona useGame.ts al detectar el cambio de status via Realtime
 
-    } catch {
+    } catch (err) {
+      console.error('[game-start] caught:', err)
       setError(t('errors.generic'))
       setLoading(false)
     }
   }
 
-  const canStart = players.length >= minPlayers
+  // usePlayers tarda un ciclo en cargar la lista; si currentPlayer ya está
+  // en el store (el host acaba de crear la partida), sabemos que hay al menos 1 jugador.
+  const knownPlayerCount = players.length > 0 ? players.length : (currentPlayer ? 1 : 0)
+  const canStart = knownPlayerCount >= minPlayers
 
   return (
     <div className={styles.container}>

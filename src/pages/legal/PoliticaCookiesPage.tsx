@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Layout } from '../../components/ui/Layout'
 import styles from './LegalPage.module.css'
 
-const LAST_UPDATED = '[FECHA DE ÚLTIMA ACTUALIZACIÓN]'
+const LAST_UPDATED = '19/03/2026'
 
 export function PoliticaCookiesPage() {
   const { t } = useTranslation()
