@@ -101,7 +101,7 @@ interface PrintWizardState {
   boardSize: 3 | 4 | 5
   numPlayers: number                     // 1–50
   numGames: number                       // 1–10
-  designId: 'classic' | 'dark' | 'fun'
+  designId: 'festivo' | 'retro' | 'verde'
   customTitle: string                    // max 40 chars
   paymentDone: boolean
   generatedBoards: PrintableBoard[][]   // [partida][jugador]
@@ -160,26 +160,95 @@ Tres controles:
 
 Los diseños se implementan como configuraciones de estilo que el componente `PrintableBingoCard` aplica dinámicamente. No son imágenes estáticas, son variaciones del mismo componente React/HTML renderizado a PDF.
 
-| ID | Nombre | Descripción visual |
-|---|---|---|
-| `classic` | Clásico | Fondo blanco, bordes teal, celdas con fondo crema, título en dark |
-| `dark` | Oscuro | Fondo `#1e1b24` (color-bg del proyecto), celdas `#37323e`, texto crema, acento teal |
-| `fun` | Festivo | Fondo blanco, celdas alternando amarillo y crema, borde rojo, título con gradiente teal→red |
+Todos los diseños comparten la misma estructura: **cabecera** (título principal + subtítulo/título personalizado) + **grid de celdas** solo con texto (título canción + artista, sin imagen de álbum).
+
+---
+
+#### Diseño 1 — `festivo` ("Bingo Musical · Rosa")
+
+Inspirado en una estética candy/pop colorida.
+
+**Cabecera:**
+- Fondo rosa pastel (`#f9a8c9` aprox.)
+- Título "Bingo Musical" en tipografía script/cursiva grande, color rojo oscuro (`#c0392b`)
+- Subtítulo con el título personalizado del usuario en mayúsculas espaciadas, color oscuro
+- Ilustraciones decorativas en las esquinas (radio cassette y personaje musical estilo cartoon). Usar emojis grandes o SVGs simples si no hay assets disponibles: 📻 🎵
+- Sin borde exterior
+
+**Celdas:**
+- Las celdas alternan entre una paleta de 6 colores sin patrón fijo (aspecto "confeti"):
+  `#c0392b` (rojo), `#e8a0bf` (rosa claro), `#f4a261` (naranja), `#9b59b6` (morado), `#f8c8d4` (rosa muy claro), `#ffffff` (blanco)
+- Texto del título de la canción: blanco o rojo oscuro según contraste del fondo de celda, negrita, tamaño mediano
+- Texto del artista: misma lógica de contraste, tamaño pequeño, peso normal
+- Sin borde entre celdas (las celdas de colores ya las delimitan visualmente)
+- Las celdas con fondo blanco llevan el texto en rojo oscuro
+
+**Footer:** ninguno
+
+---
+
+#### Diseño 2 — `retro` ("Bingo Musical · Lila")
+
+Estética vintage de ordenador/ventana de aplicación.
+
+**Cabecera:**
+- Fondo general lila/periwinkle (`#c5c8f0` aprox.)
+- Borde exterior grueso marrón oscuro (`#3d1a0e`), esquinas redondeadas suaves
+- Barra superior estilo "barra de título de ventana" en marrón oscuro con 3 pequeños cuadrados (□□□) a la derecha, simulando botones de ventana
+- Título "Bingo Musical" en negrita grande, color marrón oscuro, subrayado
+- Subtítulo con el título personalizado en negrita, color marrón oscuro, tamaño mediano
+- Ilustraciones en esquinas inferiores: personajes cartoon estilo retro (lápiz y nota musical). Usar emojis: ✏️ 🎵 o usar avatares de: src\public\avatares
+
+**Celdas:**
+- Fondo lila claro (igual que el fondo general, `#c5c8f0`)
+- Grid con líneas de borde marrón oscuro (`#3d1a0e`), grosor 1–2px
+- Texto del título de la canción: marrón oscuro, negrita, tamaño mediano
+- Texto del artista: marrón oscuro, peso normal, tamaño pequeño
+- Sin color de fondo diferenciado por celda (todas iguales)
+
+**Footer:**
+- Texto "@MusiBingo" centrado en marrón oscuro, tamaño pequeño, al pie del cartón (fuera del grid)
+
+---
+
+#### Diseño 3 — `verde` ("Bingo Musical · Verde")
+
+Estética deportiva/moderna con contraste fuerte.
+
+**Cabecera:**
+- Fondo degradado vertical: verde lima claro (`#c8e63c`) arriba → verde medio (`#5cb85c`) abajo
+- Texto "@MUSIBINGO" muy pequeño en verde oscuro, parte superior centrado
+- Título personalizado del usuario en mayúsculas, tipografía extra-bold, color verde oscuro (`#1a5c2a`), tamaño grande
+- Banner horizontal debajo del título: fondo naranja/amarillo (`#f5a623`), texto "BINGO MUSICAL" en mayúsculas bold, color oscuro
+
+**Celdas:**
+- Fondo del grid: verde medio (`#3d8b47`)
+- Las celdas alternan entre dos tonos de verde en patrón ajedrezado:
+  - Verde oscuro: `#2d6e35`
+  - Verde medio: `#4a9e54`
+- Texto del título de la canción: blanco, negrita, tamaño mediano
+- Texto del artista: blanco/crema, peso normal, tamaño pequeño
+- Sin borde entre celdas (el contraste de color las delimita)
+
+**Footer:** ninguno
+
+---
 
 ### 5.2 Contenido de cada celda
 
-Cada celda muestra:
-- Imagen del álbum (cuadrada, ocupa ~60% del alto de la celda)
-- Nombre de la canción (truncado si es muy largo, font-size pequeño)
-- Nombre del artista (más pequeño aún, color secundario)
+Todas las celdas en los tres diseños muestran **solo texto**, sin imagen de álbum:
+- **Línea 1:** Nombre de la canción (negrita, truncado con ellipsis si supera 2 líneas)
+- **Línea 2:** Nombre del artista (peso normal, tamaño ~80% del título, truncado si es necesario)
+
+El componente `PrintableBingoCard` recibe las celdas como `TrackCell[]` y aplica el diseño seleccionado.
 
 ### 5.3 Cabecera del cartón
 
-Cada cartón incluye una cabecera con:
-- Título personalizado por el usuario (o "MusiBingo" por defecto)
-- Nombre de la playlist
-- Número de jugador y número de partida (ej: "Jugador 3 · Partida 2")
-- Logo de MusiBingo (pequeño, esquina superior derecha)
+Cada cartón incluye en su cabecera, según el diseño:
+- Título "Bingo Musical" (fijo, parte del diseño)
+- Título personalizado por el usuario (o "Mi Bingo Musical" por defecto)
+- Número de jugador y número de partida — mostrado de forma discreta en todos los diseños (ej: esquina superior izquierda o bajo el título, tamaño pequeño): `"Jugador 3 · Partida 2"`
+- Handle "@MusiBingo" según el diseño (obligatorio en `retro` y `verde`, opcional en `festivo`)
 
 ---
 
@@ -302,9 +371,9 @@ Añadir las siguientes claves al archivo de traducciones (todos los idiomas: `es
     "numPlayers": "Número de jugadores",
     "numGames": "Número de partidas",
     "totalCards": "Total de cartones: {{total}}",
-    "designClassic": "Clásico",
-    "designDark": "Oscuro",
-    "designFun": "Festivo",
+    "designFestivo": "Festivo",
+    "designRetro": "Retro",
+    "designVerde": "Verde",
     "customTitle": "Título del cartón",
     "customTitlePlaceholder": "MusiBingo · Cumpleaños de Ana",
     "customTitleHint": "Aparecerá en la cabecera de cada cartón (máx. 40 caracteres)",
@@ -404,7 +473,7 @@ Tareas:
 **Objetivo:** El usuario puede elegir un diseño y ver un preview real del cartón con canciones de la playlist.
 
 Tareas:
-- Implementar `PrintableBingoCard.tsx` con los tres diseños (`classic`, `dark`, `fun`)
+- Implementar `PrintableBingoCard.tsx` con los tres diseños (`festivo`, `retro`, `verde`)
   - El componente acepta `{ design, title, cells, playerNum, gameNum, boardSize }` como props
   - Los estilos respetan las dimensiones del PDF (ver sección 6.2)
 - Implementar `PrintStep3Design.tsx`:
