@@ -43,12 +43,39 @@
   padding: var(--space-4) var(--space-6);
 }
 
+.printBtn {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-full);
+  /* Gradient border trick */
+  background:
+    linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+    var(--gradient-primary) border-box;
+  border: 2px solid transparent;
+  color: var(--color-teal);
+  text-decoration: none;
+  transition: color 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.printBtn:hover {
+  color: var(--color-cream);
+  transform: scale(1.03);
+  box-shadow: 0 0 18px rgba(20, 218, 201, 0.35);
+}
+
 .adBanner {
   margin-top: var(--space-8);
   text-align: center;
 }
 
-@media (min-width: 480px) {
+@media (min-width: 750px) {
   .actions {
     flex-direction: row;
     max-width: 420px;

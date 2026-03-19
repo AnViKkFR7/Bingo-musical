@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { BoardCell } from '../../types'
 import { BingoCell } from './BingoCell'
 import styles from './BingoBoard.module.css'
@@ -10,6 +11,14 @@ interface Props {
 }
 
 export function BingoBoard({ cells, boardSize, boardId, gameId }: Props) {
+  const [blocked, setBlocked] = useState(false)
+
+  function handleWrongClick() {
+    if (blocked) return
+    setBlocked(true)
+    setTimeout(() => setBlocked(false), 1500)
+  }
+
   return (
     <div
       className={styles.grid}
@@ -22,6 +31,8 @@ export function BingoBoard({ cells, boardSize, boardId, gameId }: Props) {
           cell={cell}
           boardId={boardId}
           gameId={gameId}
+          blocked={blocked}
+          onWrongClick={handleWrongClick}
         />
       ))}
     </div>

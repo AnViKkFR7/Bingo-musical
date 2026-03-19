@@ -7,13 +7,22 @@ interface Props {
   cell: BoardCell
   boardId: string
   gameId: string
+  blocked: boolean
+  onWrongClick: () => void
 }
 
-export function BingoCell({ cell, boardId, gameId }: Props) {
+export function BingoCell({ cell, boardId, gameId, blocked, onWrongClick }: Props) {
   const [marking, setMarking] = useState(false)
+  const [wrong, setWrong] = useState(false)
 
   async function handleClick() {
-    if (cell.isMarked || marking) return
+    if (cell.isMarked || marking || blocked) return
+    if (!cell.isPlayed) {
+      setWrong(true)
+      onWrongClick()
+      setTimeout(() => setWrong(false), 1500)
+      return
+    }
     setMarking(true)
     await supabase.from('board_marks').insert({
       board_id: boardId,
@@ -23,7 +32,7 @@ export function BingoCell({ cell, boardId, gameId }: Props) {
     setMarking(false)
   }
 
-  const isClickable = !cell.isMarked
+  const isClickable = !cell.isMarked && !blocked
 
   return (
     <div
@@ -32,6 +41,7 @@ export function BingoCell({ cell, boardId, gameId }: Props) {
         cell.isMarked ? styles.flipped : '',
         isClickable ? styles.clickable : '',
         marking ? styles.marking : '',
+        wrong ? styles.wrong : '',
       ]
         .filter(Boolean)
         .join(' ')}

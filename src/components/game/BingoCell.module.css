@@ -8,7 +8,27 @@
 }
 
 .clickable {
-  /* all unflipped cards are already clickable */
+  /* all unflipped played cards are clickable */
+}
+
+/* Wrong click — shake + red flash, no visual hint before */
+.wrong {
+  cursor: not-allowed;
+  pointer-events: none;
+  animation: wrongShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.wrong .front {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.55) !important;
+}
+
+@keyframes wrongShake {
+  10%, 90%  { transform: translateX(-2px) rotate(-1deg); }
+  20%, 80%  { transform: translateX(4px)  rotate(1deg);  }
+  30%, 50%, 70% { transform: translateX(-5px) rotate(-1deg); }
+  40%, 60%  { transform: translateX(5px)  rotate(1deg);  }
+  100%      { transform: translateX(0)    rotate(0);     }
 }
 
 .marking {

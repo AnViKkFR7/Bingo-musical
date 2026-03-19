@@ -1,0 +1,417 @@
+/* ============================================================
+   PrintableBingoCard — Styles for all 3 designs
+   ============================================================ */
+
+/* ── Base card ─────────────────────────────────────────────── */
+.card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Nunito', system-ui, sans-serif;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* ── Grid ─────────────────────────────────────────────────── */
+.grid {
+  flex: 1;
+  display: grid;
+  min-height: 0;
+}
+
+.grid3 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); }
+.grid4 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); }
+.grid5 { grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(5, 1fr); }
+
+/* ── Base cell ────────────────────────────────────────────── */
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 3px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.cellName,
+.cellNameRetro,
+.cellNameVerde,
+.cellNameNoche,
+.cellNamePapel {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-weight: 700;
+  font-size: 0.55em;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.cellArtist,
+.cellArtistRetro,
+.cellArtistVerde,
+.cellArtistNoche,
+.cellArtistPapel {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-weight: 400;
+  font-size: 0.45em;
+  line-height: 1.2;
+  margin-top: 1px;
+  opacity: 0.85;
+  word-break: break-word;
+}
+
+/* ============================================================
+   DESIGN: festivo
+   ============================================================ */
+.festivo {
+  background: #fff0f6;
+}
+
+.headerFestivo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f9a8c9;
+  padding: 4px 6px;
+  flex-shrink: 0;
+}
+
+.headerDecLeft,
+.headerDecRight {
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+.headerCenter {
+  flex: 1;
+  text-align: center;
+}
+
+.titleFestivo {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 0.9em;
+  color: #c0392b;
+  line-height: 1.1;
+}
+
+.subtitleFestivo {
+  font-size: 0.5em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #3d1a0e;
+  margin-top: 1px;
+}
+
+.playerLabel {
+  font-size: 0.42em;
+  color: #3d1a0e;
+  opacity: 0.7;
+  margin-top: 1px;
+}
+
+/* ============================================================
+   DESIGN: retro
+   ============================================================ */
+.retro {
+  background: #c5c8f0;
+  border: 3px solid #3d1a0e;
+  border-radius: 6px;
+}
+
+.headerRetro {
+  background: #c5c8f0;
+  border-bottom: 2px solid #3d1a0e;
+  flex-shrink: 0;
+}
+
+.retroTitleBar {
+  background: #3d1a0e;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 6px;
+}
+
+.retroWindowTitle {
+  font-size: 0.45em;
+  color: #c5c8f0;
+  font-weight: 700;
+}
+
+.retroButtons {
+  font-size: 0.45em;
+  color: #c5c8f0;
+  letter-spacing: 2px;
+}
+
+.retroHeaderBody {
+  padding: 4px 6px 3px;
+  text-align: center;
+}
+
+.titleRetro {
+  font-weight: 700;
+  font-size: 0.85em;
+  color: #3d1a0e;
+  text-decoration: underline;
+  line-height: 1.1;
+}
+
+.subtitleRetro {
+  font-weight: 700;
+  font-size: 0.5em;
+  color: #3d1a0e;
+  margin-top: 1px;
+}
+
+.playerLabelRetro {
+  font-size: 0.4em;
+  color: #3d1a0e;
+  opacity: 0.75;
+  margin-top: 1px;
+}
+
+.cellRetro {
+  background: #c5c8f0;
+  border: 1px solid #3d1a0e;
+}
+
+.cellNameRetro {
+  color: #3d1a0e;
+}
+
+.cellArtistRetro {
+  color: #3d1a0e;
+}
+
+.footerRetro {
+  text-align: center;
+  font-size: 0.45em;
+  color: #3d1a0e;
+  font-weight: 700;
+  padding: 2px 0 3px;
+  flex-shrink: 0;
+  border-top: 1px solid #3d1a0e;
+}
+
+/* ============================================================
+   DESIGN: verde
+   ============================================================ */
+.verde {
+  background: #3d8b47;
+}
+
+.headerVerde {
+  background: linear-gradient(180deg, #c8e63c 0%, #5cb85c 100%);
+  padding: 4px 6px 3px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.verdeHandle {
+  font-size: 0.38em;
+  font-weight: 700;
+  color: #1a5c2a;
+  letter-spacing: 0.05em;
+}
+
+.titleVerde {
+  font-size: 0.75em;
+  font-weight: 900;
+  color: #1a5c2a;
+  line-height: 1.1;
+  margin-top: 1px;
+}
+
+.verdeBanner {
+  background: #f5a623;
+  display: inline-block;
+  padding: 1px 8px;
+  font-size: 0.5em;
+  font-weight: 700;
+  color: #1a2a0a;
+  margin-top: 2px;
+  border-radius: 2px;
+}
+
+.playerLabelVerde {
+  font-size: 0.38em;
+  color: #1a5c2a;
+  margin-top: 1px;
+  opacity: 0.8;
+}
+
+.cellNameVerde {
+  color: #ffffff;
+}
+
+.cellArtistVerde {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ============================================================
+   DESIGN: noche  (discoteca / neón nocturno)
+   ============================================================ */
+.noche {
+  background: #0d0d1a;
+  border: 2px solid #6c3fc5;
+  border-radius: 6px;
+}
+
+.headerNoche {
+  background: linear-gradient(135deg, #1a0533 0%, #2d1b69 50%, #1a0533 100%);
+  padding: 4px 6px 3px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid #7c3fef;
+}
+
+.nocheStars {
+  font-size: 0.38em;
+  color: #a78fff;
+  letter-spacing: 4px;
+  line-height: 1;
+}
+
+.titleNoche {
+  font-size: 0.72em;
+  font-weight: 900;
+  color: #e0c8ff;
+  line-height: 1.1;
+  margin-top: 1px;
+  text-shadow: 0 0 8px #9b59f5;
+  letter-spacing: 0.03em;
+}
+
+.subtitleNoche {
+  font-size: 0.45em;
+  font-weight: 700;
+  color: #b39dff;
+  margin-top: 1px;
+}
+
+.playerLabelNoche {
+  font-size: 0.38em;
+  color: #7c5fc0;
+  margin-top: 1px;
+}
+
+/* Noche cells */
+.cellNoche {
+  background: #141428;
+  border: 1px solid #2d1b69;
+}
+
+.cellNocheGlow {
+  background: #1c1040;
+  border: 1px solid #6c3fc5;
+  box-shadow: inset 0 0 4px rgba(124, 63, 239, 0.3);
+}
+
+.cellNameNoche {
+  color: #e0c8ff;
+}
+
+.cellArtistNoche {
+  color: #9b7fd4;
+}
+
+.footerNoche {
+  text-align: center;
+  font-size: 0.42em;
+  color: #a78fff;
+  font-weight: 700;
+  padding: 2px 0 3px;
+  flex-shrink: 0;
+  border-top: 1px solid #2d1b69;
+  letter-spacing: 0.05em;
+}
+
+/* ============================================================
+   DESIGN: papel  (artesanal / kraft paper)
+   ============================================================ */
+.papel {
+  background: #f5e6c8;
+  border: 3px solid #8b6914;
+  border-radius: 4px;
+  /* Subtle texture via box-shadow layering */
+  box-shadow: inset 0 0 0 2px #e8d4a0, inset 0 0 0 4px #f5e6c8;
+}
+
+.headerPapel {
+  background: #e8d4a0;
+  border-bottom: 2px dashed #8b6914;
+  padding: 4px 6px 3px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.papelStamp {
+  display: inline-block;
+  font-size: 0.4em;
+  font-weight: 700;
+  color: #6b4c11;
+  border: 1px solid #8b6914;
+  border-radius: 3px;
+  padding: 0 4px;
+  letter-spacing: 0.06em;
+  margin-bottom: 1px;
+}
+
+.titlePapel {
+  font-family: Georgia, serif;
+  font-size: 0.82em;
+  font-weight: 700;
+  font-style: italic;
+  color: #4a2c0a;
+  line-height: 1.1;
+}
+
+.subtitlePapel {
+  font-size: 0.45em;
+  font-weight: 700;
+  color: #6b4c11;
+  margin-top: 1px;
+  letter-spacing: 0.04em;
+}
+
+.playerLabelPapel {
+  font-size: 0.38em;
+  color: #8b6914;
+  margin-top: 1px;
+  opacity: 0.8;
+}
+
+/* Papel cells */
+.cellPapel {
+  background: #faf3e0;
+  border: 1px dashed #c4973a;
+}
+
+.cellNamePapel {
+  color: #4a2c0a;
+}
+
+.cellArtistPapel {
+  color: #7a5c2a;
+}
+
+.footerPapel {
+  text-align: center;
+  font-size: 0.4em;
+  color: #8b6914;
+  font-style: italic;
+  padding: 2px 0 3px;
+  flex-shrink: 0;
+  border-top: 1px dashed #c4973a;
+  letter-spacing: 0.04em;
+}

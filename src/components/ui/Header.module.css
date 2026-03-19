@@ -35,3 +35,23 @@
   align-items: center;
   gap: var(--space-4);
 }
+
+.navLink {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
+  transition: color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  color: var(--color-teal);
+  background: rgba(20, 218, 201, 0.08);
+}
+
+.navLinkActive {
+  color: var(--color-teal);
+}

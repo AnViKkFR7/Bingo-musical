@@ -1,0 +1,124 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  text-align: center;
+}
+
+.successBanner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--space-4);
+  background: rgba(20, 218, 201, 0.08);
+  border: 1px solid rgba(20, 218, 201, 0.25);
+  border-radius: var(--radius-2xl);
+  width: 100%;
+}
+
+.successIcon {
+  font-size: 3rem;
+  line-height: 1;
+  animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  70%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.successTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: 900;
+  color: var(--color-teal);
+  margin: 0;
+}
+
+.successSubtitle {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Download */
+.downloadSection {
+  width: 100%;
+  max-width: 360px;
+}
+
+.downloadSection .btn-primary {
+  width: 100%;
+  font-size: var(--font-size-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+/* Divider */
+.divider {
+  width: 100%;
+  max-width: 360px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.dividerText {
+  padding: 0 var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* Email */
+.emailSection {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.emailLabel {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-align: left;
+}
+
+.emailRow {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.emailRow .input {
+  flex: 1;
+}
+
+.emailSentMsg {
+  color: var(--color-success);
+  font-weight: 700;
+  font-size: var(--font-size-base);
+}
+
+/* Hidden card container — off-screen but in DOM for html2canvas */
+.hiddenContainer {
+  position: fixed;
+  left: -99999px;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  pointer-events: none;
+}

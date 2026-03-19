@@ -22,6 +22,9 @@ export function HomePage() {
             {t('home.joinGame')}
           </Link>
         </div>
+        {/* <Link to="/imprimir" className={styles.printBtn}>
+          {t('print.navLabel')} →
+        </Link> */}
       </div>
 
       <AdSlot

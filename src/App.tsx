@@ -6,6 +6,7 @@ import { JoinGamePage } from './pages/JoinGamePage'
 import { LobbyPage } from './pages/LobbyPage'
 import { GamePage } from './pages/GamePage'
 import { ResultsPage } from './pages/ResultsPage'
+import { PrintPage } from './pages/PrintPage'
 
 function LoadingFallback() {
   return (
@@ -26,6 +27,7 @@ export function App() {
           <Route path="/sala/:gameCode" element={<LobbyPage />} />
           <Route path="/jugar/:gameCode" element={<GamePage />} />
           <Route path="/resultados/:gameCode" element={<ResultsPage />} />
+          <Route path="/imprimir" element={<PrintPage />} />
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
