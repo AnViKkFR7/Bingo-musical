@@ -13,14 +13,14 @@ export function Header() {
           <img src="/musibingo-logo.png" alt="MusiBingo" className={styles.logoImg} />
         </Link>
         <nav className={styles.nav}>
-          <NavLink
+          {/*<NavLink
             to="/imprimir"
             className={({ isActive }) =>
               `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
             }
           >
             {t('print.navLabel')}
-          </NavLink>
+          </NavLink>*/}
           <LanguageSelector />
         </nav>
       </div>
