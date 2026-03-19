@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { supabase } from '../lib/supabase'
+import { supabase, ensureAuth } from '../lib/supabase'
 import { saveSession } from '../lib/utils'
 import { useGameStore } from '../store/gameStore'
 import { Layout } from '../components/ui/Layout'
@@ -99,9 +99,10 @@ export function JoinGamePage() {
       }
 
       // 4. Crear jugador
+      const user = await ensureAuth()
       const { data: player, error: playerErr } = await supabase
         .from('players')
-        .insert({ game_id: game.id, alias: cleanAlias, is_host: false })
+        .insert({ game_id: game.id, alias: cleanAlias, is_host: false, auth_user_id: user?.id ?? null })
         .select()
         .single()
 

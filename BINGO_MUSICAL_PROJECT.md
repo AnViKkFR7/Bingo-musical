@@ -827,3 +827,84 @@ SPOTIFY_CLIENT_SECRET=
 - `Layout.tsx` — acepta `hideAvatars?: boolean` para suprimir los flotantes (juego, resultados).
 - `Header.tsx` — logo imagen (no texto). Sin emoji.
 - Todos los botones globales: `border-radius: full`, Nunito 800 weight.
+
+---
+
+## 16. Seguridad
+
+### 16.1 Autenticación anónima (Supabase Anonymous Auth)
+
+Todos los jugadores obtienen una sesión Supabase anónima invisible al entrar a la app. Esto da un `auth.uid()` estable sin que el usuario tenga que registrarse ni hacer login.
+
+**Implementación en `src/lib/supabase.ts`:**
+
+- Se exporta la función `ensureAuth()` — un singleton promise que llama a `signInAnonymously()` exactamente una vez, sin importar cuántos callers la invoquen en paralelo.
+- Si ya existe una sesión en `localStorage`, la reutiliza (el mismo usuario anónimo persiste entre sesiones y recargas de página).
+- `CreateGamePage` y `JoinGamePage` llaman a `await ensureAuth()` justo antes de insertar el jugador, garantizando que el `auth.uid()` ya existe.
+
+**Por qué un singleton y no fire-and-forget:**
+Llamar a `signInAnonymously()` más de una vez concurrentemente crea dos usuarios distintos. El singleton garantiza que solo se crea uno, y que todos los callers reciben el mismo `User`.
+
+**Activar en Supabase dashboard:**
+Authentication → Providers → Anonymous Sign-ins → Enabled.
+
+### 16.2 Columna `auth_user_id` en `players`
+
+```sql
+ALTER TABLE players
+  ADD COLUMN IF NOT EXISTS auth_user_id UUID REFERENCES auth.users(id);
+```
+
+Cada fila `players` queda vinculada al usuario anónimo que la creó. Las RLS policies usan esta columna para verificar pertenencia.
+
+Al insertar un jugador (host o participante), se pasa `auth_user_id: user.id` obtenido de `ensureAuth()`.
+
+### 16.3 Row Level Security (RLS)
+
+RLS habilitado en todas las tablas. Las políticas siguen el patrón:
+- **SELECT:** público (`USING (true)`) — cualquier sesión puede leer datos de partidas.
+- **INSERT/UPDATE:** verificado via `auth_user_id = auth.uid()` o cadena de joins.
+- **Operaciones de servicio** (insertar `game_tracks`, asignar `track_positions`): solo via Edge Function con `service_role`, que omite RLS.
+
+**Resumen de políticas por tabla:**
+
+| Tabla | SELECT | INSERT | UPDATE |
+|-------|--------|--------|--------|
+| `playlists` | público | — (dashboard) | — |
+| `preset_tracks` | público | — (dashboard) | — |
+| `games` | público | authenticated | solo si `host_player_id IS NULL` (bootstrap) o caller es el host actual; `WITH CHECK` verifica que el nuevo `host_player_id` pertenece al caller |
+| `players` | público | authenticated, `WITH CHECK (auth_user_id = auth.uid())` | — |
+| `game_tracks` | público | solo service_role (EF) | solo host vía `auth.uid()` |
+| `boards` | público | authenticated, player_id pertenece al caller | authenticated, player_id pertenece al caller |
+| `board_marks` | público | authenticated, board_id → player_id → `auth_user_id = auth.uid()` | — |
+
+**Política `games_update_host` — detalle importante:**
+
+El `host_player_id` se asigna en un segundo UPDATE tras crear el juego (primero se inserta el host en `players`, luego se actualiza el juego). Por eso la condición `USING` permite el UPDATE cuando `host_player_id IS NULL`, pero `WITH CHECK` garantiza que el valor resultante siempre pertenece al caller — nadie puede apropiarse de una partida vacante.
+
+### 16.4 Edge Function `game-start`
+
+Toda la lógica de inicio de partida se mueve al servidor (`supabase/functions/game-start/index.ts`), eliminando la posibilidad de que un jugador manipule los datos desde el frontend.
+
+**Flujo:**
+1. Extrae el JWT del header `Authorization` y verifica identidad con `supabase.auth.getUser()`.
+2. Carga la partida y comprueba que `players.auth_user_id = auth.uid()` para el `host_player_id`.
+3. Obtiene tracks: desde `preset_tracks` (Supabase) si `is_preset`, o desde la API de Spotify si es playlist de usuario.
+4. Baraja y crea todos los `game_tracks` con `service_role` (omite RLS).
+5. Asigna `track_positions` aleatorios a cada `board` con `service_role`.
+6. Actualiza `games.status = 'playing'`.
+
+**El frontend** (`StartGameButton.tsx`) simplifica a:
+```typescript
+await supabase.functions.invoke('game-start', { body: { game_id: gameId } })
+```
+
+### 16.5 Archivos relevantes
+
+| Archivo | Propósito |
+|---------|-----------|
+| `supabase/migrations/001_security.sql` | Migración completa: añade `auth_user_id`, habilita RLS, crea todas las políticas. Ejecutar en Supabase SQL Editor. |
+| `supabase/functions/game-start/index.ts` | Edge Function de inicio de partida con verificación server-side. |
+| `src/lib/supabase.ts` | Cliente Supabase + `ensureAuth()` singleton. |
+| `src/pages/CreateGamePage.tsx` | Llama a `ensureAuth()` antes de insertar el host. |
+| `src/pages/JoinGamePage.tsx` | Llama a `ensureAuth()` antes de insertar el jugador. |

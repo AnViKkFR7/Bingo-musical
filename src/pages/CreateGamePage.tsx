@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { supabase } from '../lib/supabase'
+import { supabase, ensureAuth } from '../lib/supabase'
 import { generateUniqueGameCode, saveSession } from '../lib/utils'
 import { useGameStore } from '../store/gameStore'
 import { Layout } from '../components/ui/Layout'
@@ -140,9 +140,10 @@ export function CreateGamePage() {
       if (gameErr || !game) throw gameErr ?? new Error('no_game')
 
       // 3. Crear jugador host
+      const user = await ensureAuth()
       const { data: player, error: playerErr } = await supabase
         .from('players')
-        .insert({ game_id: game.id, alias: alias.trim(), is_host: true })
+        .insert({ game_id: game.id, alias: alias.trim(), is_host: true, auth_user_id: user?.id ?? null })
         .select()
         .single()
 
