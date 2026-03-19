@@ -36,7 +36,9 @@
     "aliasLabel": "Your name",
     "aliasPlaceholder": "What's your name?",
     "joinButton": "Join",
-    "verifyingCode": "Verifying code..."
+    "verifyingCode": "Verifying code...",
+    "sameRoomQuestion": "Are you in the same room as the DJ?",
+    "sameRoomHint": "You'll receive the audio on your device during the game."
   },
   "lobby": {
     "waitingForPlayers": "Waiting for players...",
@@ -51,6 +53,8 @@
   },
   "game": {
     "nowPlaying": "Now playing",
+    "clickToStart": "Click Next song to start the game.",
+    "waitingForDJ": "Waiting for the DJ to start the game.",
     "nextTrack": "Next song",
     "noMoreTracks": "No more songs",
     "markInstruction": "Tap if you have it on your board",

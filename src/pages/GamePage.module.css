@@ -98,6 +98,11 @@
   text-overflow: ellipsis;
 }
 
+/* ── Responsive visibility helpers ── */
+.mobileOnly {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .layout {
     grid-template-columns: 1fr;
@@ -108,6 +113,10 @@
   /* Ocultar sidebar (lista de jugadores) en móvil */
   .sidebar {
     display: none;
+  }
+
+  .mobileOnly {
+    display: block;
   }
 }
 

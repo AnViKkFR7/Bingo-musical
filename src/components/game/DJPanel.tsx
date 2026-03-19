@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../../lib/supabase'
-import { AudioPlayer } from './AudioPlayer'
 import type { GameTrack } from '../../types'
 import styles from './DJPanel.module.css'
 
@@ -9,16 +8,14 @@ interface Props {
   gameId: string
   currentTrackIndex: number
   gameTracks: GameTrack[]
-  onEndGame: () => void
   /** Oculta el historial de canciones (se renderiza fuera, debajo del cartón) */
   hideHistory?: boolean
 }
 
-export function DJPanel({ gameId, currentTrackIndex, gameTracks, onEndGame, hideHistory }: Props) {
+export function DJPanel({ gameId, currentTrackIndex, gameTracks, hideHistory }: Props) {
   const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
 
-  const currentTrack = currentTrackIndex >= 0 ? gameTracks[currentTrackIndex] ?? null : null
   const playedTracks = gameTracks.filter(gt => gt.played_at !== null)
   const hasMoreTracks = currentTrackIndex < gameTracks.length - 1
 
@@ -50,36 +47,20 @@ export function DJPanel({ gameId, currentTrackIndex, gameTracks, onEndGame, hide
 
   return (
     <div className={styles.panel}>
-      {/* Controles DJ */}
-      <div className={styles.controls}>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={handleNext}
-          disabled={loading || !hasMoreTracks}
-        >
-          {loading
-            ? t('common.loading')
-            : hasMoreTracks
-              ? t('game.nextTrack')
-              : t('game.noMoreTracks')}
-        </button>
+      <button
+        type="button"
+        className="btn btn-primary"
+        onClick={handleNext}
+        disabled={loading || !hasMoreTracks}
+      >
+        {loading
+          ? t('common.loading')
+          : hasMoreTracks
+            ? t('game.nextTrack')
+            : t('game.noMoreTracks')}
+      </button>
 
-        {/* AudioPlayer solo en el host */}
-        {currentTrack && (
-          <AudioPlayer />
-        )}
-
-        <button
-          type="button"
-          className="btn btn-danger"
-          onClick={onEndGame}
-        >
-          {t('game.endGame')}
-        </button>
-      </div>
-
-      {/* Historial */}
+      {/* Historial (solo cuando hideHistory=false) */}
       {!hideHistory && playedTracks.length > 0 && (
         <div className={styles.history}>
           <h4 className={styles.historyTitle}>{t('game.tracksPlayed')}</h4>

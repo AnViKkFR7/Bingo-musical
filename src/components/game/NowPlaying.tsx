@@ -15,15 +15,18 @@ interface Props {
   tracksPlayed: number
   totalTracks: number
   revealed?: boolean
+  isHost?: boolean
 }
 
-export function NowPlaying({ track, progress, tracksPlayed, totalTracks, revealed = true }: Props) {
+export function NowPlaying({ track, progress, tracksPlayed, totalTracks, revealed = true, isHost = false }: Props) {
   const { t } = useTranslation()
 
   if (!track) {
     return (
       <div className={`card ${styles.empty}`}>
-        <p className={styles.emptyText}>{t('game.nowPlaying')}</p>
+        <p className={styles.emptyText}>
+          {isHost ? t('game.clickToStart') : t('game.waitingForDJ')}
+        </p>
       </div>
     )
   }

@@ -16,6 +16,7 @@ import { DJPanel } from '../components/game/DJPanel'
 import { BingoBoard } from '../components/game/BingoBoard'
 import { BingoButton } from '../components/game/BingoButton'
 import { PlayerList } from '../components/game/PlayerList'
+import { AudioPlayer } from '../components/game/AudioPlayer'
 import type { BoardCell } from '../types'
 import styles from './GamePage.module.css'
 
@@ -44,6 +45,7 @@ export function GamePage() {
 
   const currentTrack = getCurrentTrack()
   const isHost = currentPlayer?.is_host ?? false
+  const hearMusic = session?.hear_music ?? false
   const revealed = useTrackReveal(currentTrack)
 
   const boardCells: BoardCell[] = useMemo(() => {
@@ -104,24 +106,30 @@ export function GamePage() {
     <Layout hideHeader>
       <div className={styles.layout}>
         <main className={styles.main}>
+          {/* 1. Canción actual */}
           <NowPlaying
             track={currentTrack}
             progress={0}
             tracksPlayed={tracksPlayed}
             totalTracks={gameTracks.length}
             revealed={revealed}
+            isHost={isHost}
           />
 
+          {/* 2. Reproductor de audio */}
+          {(isHost || hearMusic) && currentTrack && <AudioPlayer />}
+
+          {/* 3. Siguiente canción (solo DJ) */}
           {isHost && (
             <DJPanel
               gameId={game.id}
               currentTrackIndex={game.current_track_index}
               gameTracks={gameTracks}
-              onEndGame={handleEndGame}
               hideHistory
             />
           )}
 
+          {/* 4+5. Cartón + botón bingo */}
           {currentBoard && (
             <>
               <BingoBoard
@@ -138,33 +146,74 @@ export function GamePage() {
             </>
           )}
 
-          {isHost && historyTracks.length > 0 && (
-            <div className={`card ${styles.history}`}>
-              <h4 className={styles.historyTitle}>{t('game.tracksPlayed')}</h4>
-              <ul className={styles.historyList}>
-                {[...historyTracks].reverse().map(track => (
-                  <li key={track.id} className={styles.historyItem}>
-                    {track.album_image_url && (
-                      <img
-                        src={track.album_image_url}
-                        alt={track.name}
-                        className={styles.historyThumb}
-                        loading="lazy"
-                      />
-                    )}
-                    <div className={styles.historyInfo}>
-                      <span className={styles.historyName}>{track.name}</span>
-                      <span className={styles.historyArtist}>{track.artist}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* 6+7. Finalizar + historial — solo móvil */}
+          {isHost && (
+            <>
+              <button
+                type="button"
+                className={`btn btn-danger ${styles.mobileOnly}`}
+                onClick={handleEndGame}
+              >
+                {t('game.endGame')}
+              </button>
+
+              {historyTracks.length > 0 && (
+                <div className={`card ${styles.history} ${styles.mobileOnly}`}>
+                  <h4 className={styles.historyTitle}>{t('game.tracksPlayed')}</h4>
+                  <ul className={styles.historyList}>
+                    {[...historyTracks].reverse().map(track => (
+                      <li key={track.id} className={styles.historyItem}>
+                        {track.album_image_url && (
+                          <img src={track.album_image_url} alt={track.name} className={styles.historyThumb} loading="lazy" />
+                        )}
+                        <div className={styles.historyInfo}>
+                          <span className={styles.historyName}>{track.name}</span>
+                          <span className={styles.historyArtist}>{track.artist}</span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
           )}
         </main>
 
         <aside className={styles.sidebar}>
           <PlayerList players={players} boards={allBoards} />
+
+          {/* Finalizar + historial — tablet/pc (sidebar) */}
+          {isHost && (
+            <>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={handleEndGame}
+              >
+                {t('game.endGame')}
+              </button>
+
+              {historyTracks.length > 0 && (
+                <div className={`card ${styles.history}`}>
+                  <h4 className={styles.historyTitle}>{t('game.tracksPlayed')}</h4>
+                  <ul className={styles.historyList}>
+                    {[...historyTracks].reverse().map(track => (
+                      <li key={track.id} className={styles.historyItem}>
+                        {track.album_image_url && (
+                          <img src={track.album_image_url} alt={track.name} className={styles.historyThumb} loading="lazy" />
+                        )}
+                        <div className={styles.historyInfo}>
+                          <span className={styles.historyName}>{track.name}</span>
+                          <span className={styles.historyArtist}>{track.artist}</span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
+          )}
+
           <AdSlot slotId={SLOT_GAME_SIDEBAR} format="vertical" />
         </aside>
       </div>

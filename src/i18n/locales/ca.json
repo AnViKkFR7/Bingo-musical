@@ -36,7 +36,9 @@
     "aliasLabel": "El teu nom",
     "aliasPlaceholder": "Com et dius?",
     "joinButton": "Unir-se",
-    "verifyingCode": "Verificant codi..."
+    "verifyingCode": "Verificant codi...",
+    "sameRoomQuestion": "Ets a la mateixa sala que el DJ?",
+    "sameRoomHint": "Rebràs l'àudio al teu dispositiu durant la partida."
   },
   "lobby": {
     "waitingForPlayers": "Esperant jugadors...",
@@ -51,6 +53,8 @@
   },
   "game": {
     "nowPlaying": "Sonant ara",
+    "clickToStart": "Fes clic a Següent cançó per començar la partida.",
+    "waitingForDJ": "Esperant que el DJ comenci la partida.",
     "nextTrack": "Següent cançó",
     "noMoreTracks": "No hi ha més cançons",
     "markInstruction": "Toca si la tens al cartró",

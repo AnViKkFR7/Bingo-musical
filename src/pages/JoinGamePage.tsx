@@ -14,6 +14,7 @@ export function JoinGamePage() {
 
   const [code, setCode] = useState('')
   const [alias, setAlias] = useState('')
+  const [sameRoom, setSameRoom] = useState(true)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -117,7 +118,7 @@ export function JoinGamePage() {
 
       // 6. Guardar en sesión
       reset()
-      saveSession({ game_code: cleanCode, player_id: player.id, board_id: board.id, is_host: false })
+      saveSession({ game_code: cleanCode, player_id: player.id, board_id: board.id, is_host: false, hear_music: !sameRoom })
 
       navigate(`/sala/${cleanCode}`)
     } catch {
@@ -130,12 +131,15 @@ export function JoinGamePage() {
   return (
     <Layout>
       <div className={styles.page}>
-        <h1 className={styles.title}>{t('home.joinGame')}</h1>
+        <button className={styles.backButton} onClick={() => navigate(-1)} type="button">
+          ← {t('common.back')}
+        </button>
+        <h1 className={styles.title}>{t('join.title')}</h1>
 
         <form className={styles.form} onSubmit={handleJoin}>
           <div className={styles.field}>
             <label className={styles.label} htmlFor="game-code">
-              Código de partida
+              {t('join.codeLabel')}
             </label>
             <input
               id="game-code"
@@ -152,14 +156,34 @@ export function JoinGamePage() {
           </div>
 
           <div className={styles.field}>
+            <p className={styles.label}>{t('join.sameRoomQuestion')}</p>
+            <div className={styles.toggleRow}>
+              <label className={styles.toggle}>
+                <input
+                  type="checkbox"
+                  checked={sameRoom}
+                  onChange={e => setSameRoom(e.target.checked)}
+                />
+                <span className={styles.toggleSlider} />
+              </label>
+              <span className={styles.toggleLabel}>
+                {sameRoom ? t('common.yes') : t('common.no')}
+              </span>
+            </div>
+            {!sameRoom && (
+              <p className={styles.toggleHint}>{t('join.sameRoomHint')}</p>
+            )}
+          </div>
+
+          <div className={styles.field}>
             <label className={styles.label} htmlFor="player-alias">
-              Tu nombre
+              {t('join.aliasLabel')}
             </label>
             <input
               id="player-alias"
               type="text"
               className="input"
-              placeholder="¿Cómo te llamas?"
+              placeholder={t('join.aliasPlaceholder')}
               value={alias}
               onChange={e => setAlias(e.target.value)}
               maxLength={30}

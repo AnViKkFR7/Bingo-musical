@@ -41,7 +41,6 @@ export function LanguageSelector() {
         aria-haspopup="listbox"
         aria-expanded={open}
       >
-        <span>{current.flag}</span>
         <span className={styles.code}>{current.code.toUpperCase()}</span>
         <span className={`${styles.chevron} ${open ? styles.chevronOpen : ''}`}>▾</span>
       </button>
@@ -54,7 +53,6 @@ export function LanguageSelector() {
                 className={`${styles.option} ${lang.code === current.code ? styles.optionActive : ''}`}
                 onClick={() => selectLanguage(lang.code)}
               >
-                <span>{lang.flag}</span>
                 <span>{lang.label}</span>
               </button>
             </li>

@@ -36,7 +36,9 @@
     "aliasLabel": "Ton prénom",
     "aliasPlaceholder": "Comment tu t'appelles ?",
     "joinButton": "Rejoindre",
-    "verifyingCode": "Vérification du code..."
+    "verifyingCode": "Vérification du code...",
+    "sameRoomQuestion": "Es-tu dans la même salle que le DJ ?",
+    "sameRoomHint": "Tu recevras l'audio sur ton appareil pendant la partie."
   },
   "lobby": {
     "waitingForPlayers": "En attente de joueurs...",
@@ -51,6 +53,8 @@
   },
   "game": {
     "nowPlaying": "En lecture",
+    "clickToStart": "Clique sur Chanson suivante pour commencer la partie.",
+    "waitingForDJ": "En attente du DJ pour commencer la partie.",
     "nextTrack": "Chanson suivante",
     "noMoreTracks": "Plus de chansons",
     "markInstruction": "Appuie si tu l'as sur ta carte",

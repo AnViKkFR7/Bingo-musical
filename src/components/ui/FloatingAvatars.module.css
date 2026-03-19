@@ -16,10 +16,10 @@
   user-select: none;
 }
 
-/* On small screens hide completely — avatars only for desktop/tablet */
+/* On smaller screens reduce opacity so avatars don't distract from content */
 @media (max-width: 768px) {
-  .container {
-    display: none;
+  .avatar {
+    opacity: 0.25;
   }
 }
 

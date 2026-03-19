@@ -180,7 +180,14 @@ export function CreateGamePage() {
   return (
     <Layout>
       <div className={styles.page}>
-        <h1 className={styles.title}>{t('create.title')}</h1>
+        <div className={styles.header}>
+          <h1 className={styles.title}>{t('create.title')}</h1>
+          <button className={styles.backButton} onClick={() => navigate(-1)} type="button">
+            ← {t('common.back')}
+          </button>
+        </div>
+
+
 
         <section className={styles.section}>
           <h2 className={styles.sectionHeading}>{t('create.selectPlaylist')}</h2>

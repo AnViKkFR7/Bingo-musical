@@ -112,4 +112,5 @@ export interface SessionData {
   board_id: string
   game_code: string
   is_host: boolean
+  hear_music?: boolean
 }
