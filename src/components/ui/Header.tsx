@@ -1,11 +1,8 @@
-import { Link, NavLink } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import { LanguageSelector } from './LanguageSelector'
 import styles from './Header.module.css'
 
 export function Header() {
-  const { t } = useTranslation()
-
   return (
     <header className={styles.header}>
       <div className={styles.inner}>

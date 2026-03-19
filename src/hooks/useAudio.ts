@@ -8,13 +8,17 @@ import { supabase } from '../lib/supabase'
  * Llama al edge function deezer-get-preview para obtener una URL fresca
  * cada vez que cambia la canción (las URLs de Deezer caducan en ~15 min).
  */
-export function useAudio() {
+export function useAudio(onTrackEnd?: () => void) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState(0)   // 0–100
   const [hasError, setHasError] = useState(false)
   const [isFetchingPreview, setIsFetchingPreview] = useState(false)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+
+  // Ref to avoid stale closure in the event listener
+  const onTrackEndRef = useRef(onTrackEnd)
+  useEffect(() => { onTrackEndRef.current = onTrackEnd }, [onTrackEnd])
 
   const getCurrentTrack = useGameStore(s => s.getCurrentTrack)
   const currentTrack = getCurrentTrack()
@@ -99,6 +103,7 @@ export function useAudio() {
     const onEnded = () => {
       setIsPlaying(false)
       setProgress(0)
+      onTrackEndRef.current?.()
     }
     const onError = () => {
       setHasError(true)

@@ -49,7 +49,11 @@
     "startGame": "Començar partida!",
     "waitingForHost": "Esperant que el host iniciï la partida...",
     "youAreHost": "Ets el host",
-    "playlistLabel": "Llista de reproducció"
+    "playlistLabel": "Llista de reproducció",
+    "whatsappText": "T'invito a jugar a MusiBingo! Uneix-te amb el codi {{code}} a: {{url}}",
+    "showQR": "Codi QR",
+    "hideQR": "Amaga QR",
+    "qrHint": "Escaneja per unir-te"
   },
   "game": {
     "nowPlaying": "Sonant ara",
@@ -81,7 +85,9 @@
     "backHome": "Tornar a l'inici",
     "yourBoard": "El teu cartró final",
     "markedTracks": "Cançons marcades",
-    "totalPlayed": "Cançons reproduïdes"
+    "totalPlayed": "Cançons reproduïdes",
+    "donatePrompt": "T'ha agradat el joc? Ajuda que la comunitat segueixi creixent",
+    "donateBtn": "Dóna suport al projecte 💛"
   },
   "errors": {
     "gameNotFound": "Partida no trobada",
@@ -137,5 +143,88 @@
     "emailSend": "Enviar",
     "emailSent": "Correu enviat!",
     "notEnoughTracks": "La llista no té prou cançons per a un cartró {{size}}×{{size}} (mínim {{needed}})"
+  },
+  "footer": {
+    "about": "Sobre nosaltres",
+    "legal": "Avís legal",
+    "privacy": "Privacitat",
+    "cookies": "Galetes",
+    "madeBy": "Desenvolupat per"
+  },
+  "cookies": {
+    "title": "Fem servir galetes",
+    "text": "Fem servir galetes pròpies i de tercers per al correcte funcionament de la web, mostrar publicitat i analitzar-ne l'ús. Pots acceptar-les totes, triar-ne només les essencials o rebutjar-les.",
+    "acceptAll": "Acceptar totes",
+    "essentialOnly": "Només essencials",
+    "reject": "Rebutjar",
+    "policyLink": "Política de galetes"
+  },
+  "about": {
+    "badge": "Sobre el projecte",
+    "heroTitle": "El bingo musical que posa",
+    "heroTitleSpan": "el ritme a les teves reunions",
+    "heroSubtitle": "Reuneix els teus amics, família o companys i converteix les vostres cançons favorites en una experiència de joc única.",
+    "playNow": "Jugar ara →",
+    "projectLabel": "🎤 El projecte",
+    "projectTitle": "Què és MusiBingo?",
+    "projectP1": "<strong>MusiBingo</strong> és una plataforma web de bingo musical en temps real. Un <em>host</em> crea una partida triant una llista de reproducció; els jugadors s'uneixen amb un codi, cadascú rep un cartró diferent i han de marcar les cançons que van sonant en fragments de <strong>30 segons</strong>.",
+    "projectP2": "El primer a completar una línia o el cartró complet guanya. Simple, emocionant i perfecte per a qualsevol reunió: aniversaris, comiataments, nits de jocs o simplement per passar-s'ho bé.",
+    "featuresLabel": "✨ Característiques",
+    "featuresTitle": "Per què MusiBingo?",
+    "f1Title": "Llistes per a cada moment",
+    "f1Desc": "Més de 15 llistes predefinides en múltiples gèneres i dècades, o crea la teva amb les cançons que vulguis.",
+    "f2Title": "Multijugador en temps real",
+    "f2Desc": "Comparteix un codi de 6 lletres i juga amb els teus amics des de qualsevol dispositiu, a l'instant.",
+    "f3Title": "Cartrons únics",
+    "f3Desc": "Cada jugador rep un cartró diferent generat automàticament, imprimible en PDF.",
+    "f4Title": "Previsualitzacions de 30s",
+    "f4Desc": "Les cançons sonen directament al navegador gràcies a l'API de Deezer, sense cap reproductor extern.",
+    "howLabel": "🎯 En 3 passos",
+    "howTitle": "Com es juga?",
+    "h1Title": "Tria la teva llista",
+    "h1Desc": "El host tria una llista predefinida o en crea una de personalitzada amb les seves cançons favorites.",
+    "h2Title": "Convida els teus jugadors",
+    "h2Desc": "Comparteix el codi de partida. Els jugadors s'uneixen escanejant el QR o introduint el codi de 6 lletres.",
+    "h3Title": "A jugar!",
+    "h3Desc": "Sona la música, marqueu les cançons al vostre cartró i el primer a completar-lo guanya.",
+    "moiraLabel": "Projecte desenvolupat per",
+    "moiraDesc1": "MoiraOrdo és una organització de desenvolupament creatiu compromesa amb la construcció d'experiències web úniques, funcionals i amb personalitat. Ens apassiona la tecnologia al servei de les persones i ens agrada que cada projecte que surt de les nostres mans tingui caràcter propi.",
+    "moiraDesc2": "MusiBingo va néixer amb la idea d'unir música, joc i tecnologia en un producte que la gent realment vulgui fer servir. Esperem que el gaudeixis tant com nosaltres hem gaudit creant-lo. 🎵",
+    "visitMoira": "Visitar MoiraOrdo →",
+    "techLabel": "🛠️ Stack tecnològic",
+    "techTitle": "Construït amb",
+    "ctaTitle": "Llest per jugar?",
+    "ctaSubtitle": "Crea una partida en segons i repte els teus amics.",
+    "createGame": "Crear partida",
+    "joinGame": "Unir-se a una partida"
+  },
+  "legal": {
+    "lastUpdated": "Darrera actualització:",
+    "placeholder": "[PENDENT D'EMPLENAR]",
+    "avisoTitle": "Avís Legal",
+    "privacidadTitle": "Política de Privacitat",
+    "cookiesTitle": "Política de Galetes"
+  },
+  "donate": {
+    "label": "💶 Dóna suport al projecte",
+    "title": "Per què demano el teu suport?",
+    "p1": "Mantenir plataformes com MusiBingo i desenvolupar nous títols requereix molt més que temps. Hi ha costos de servidors, dominis, eines de desenvolupament i hores de cafè (molt de cafè!).",
+    "p2": "Fins ara ho he finançat tot de la meva butxaca, però per dur a terme els nous desenvolupaments que tinc en ment, necessito un petit empentonada de la comunitat.",
+    "destinationTitle": "On aniran les donacions?",
+    "destinationLeadin": "La teva aportació, per petita que sigui, anirà directament a:",
+    "d1Title": "Noves Funcionalitats",
+    "d1Desc": "Millorar MusiBingo amb nous modes de joc sol·licitats per vosaltres.",
+    "d2Title": "Nous Lançaments",
+    "d2Desc": "Desenvolupar dos nous prototips de jocs gratuïts que ja tinc al forn.",
+    "d3Title": "Infraestructura",
+    "d3Desc": "Assegurar que les webs segueixin volant i no caiguin quan tots vulgueu jugar alhora.",
+    "d4Title": "Independència",
+    "d4Desc": "Poder dedicar-li més temps de qualitat a programar contingut per a la comunitat.",
+    "ctaTitle": "No és només una donació, és una inversió en diversió",
+    "ctaP1": "Si alguna vegada has jugat una partida a MusiBingo o t'agrada la filosofia de MoiraOrdo, aquesta és la millor manera de dir \"gràcies!\".",
+    "ctaP2": "No hi ha obligació, però si pots col·laborar amb el preu d'un refresc o una pizza, m'estaràs ajudant a seguir creant jocs que qualsevol, a qualsevol lloc del món, pugui gaudir gratis.",
+    "thanks": "Gràcies per ser part d'aquest viatge i per donar suport al desenvolupament independent!",
+    "paypalLabel": "Escaneja per pagar amb PayPal",
+    "gofundmeBtn": "Donar a GoFundMe"
   }
 }

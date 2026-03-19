@@ -49,7 +49,11 @@
     "startGame": "Démarrer la partie !",
     "waitingForHost": "En attente que le host démarre la partie...",
     "youAreHost": "Tu es le host",
-    "playlistLabel": "Playlist"
+    "playlistLabel": "Playlist",
+    "whatsappText": "Je t'invite à jouer à MusiBingo ! Rejoins avec le code {{code}} sur : {{url}}",
+    "showQR": "Code QR",
+    "hideQR": "Masquer QR",
+    "qrHint": "Scanne pour rejoindre"
   },
   "game": {
     "nowPlaying": "En lecture",
@@ -81,7 +85,9 @@
     "backHome": "Retour à l'accueil",
     "yourBoard": "Ta carte finale",
     "markedTracks": "Chansons marquées",
-    "totalPlayed": "Chansons jouées"
+    "totalPlayed": "Chansons jouées",
+    "donatePrompt": "Tu as aimé le jeu ? Aide la communauté à continuer à grandir",
+    "donateBtn": "Soutiens le projet 💛"
   },
   "errors": {
     "gameNotFound": "Partie introuvable",
@@ -137,5 +143,88 @@
     "emailSend": "Envoyer",
     "emailSent": "Email envoyé !",
     "notEnoughTracks": "La playlist n'a pas assez de chansons pour une carte {{size}}×{{size}} (minimum {{needed}})"
+  },
+  "footer": {
+    "about": "À propos",
+    "legal": "Mentions légales",
+    "privacy": "Confidentialité",
+    "cookies": "Cookies",
+    "madeBy": "Développé par"
+  },
+  "cookies": {
+    "title": "Nous utilisons des cookies",
+    "text": "Nous utilisons des cookies propres et tiers pour le bon fonctionnement du site, afficher de la publicité et analyser son utilisation. Tu peux tout accepter, ne choisir que les essentiels ou les refuser.",
+    "acceptAll": "Tout accepter",
+    "essentialOnly": "Essentiels seulement",
+    "reject": "Refuser",
+    "policyLink": "Politique des cookies"
+  },
+  "about": {
+    "badge": "À propos du projet",
+    "heroTitle": "Le bingo musical qui met",
+    "heroTitleSpan": "le rythme dans tes réunions",
+    "heroSubtitle": "Réunis tes amis, ta famille ou tes collègues et transforme vos chansons préférées en une expérience de jeu unique.",
+    "playNow": "Jouer maintenant →",
+    "projectLabel": "🎤 Le projet",
+    "projectTitle": "Qu'est-ce que MusiBingo ?",
+    "projectP1": "<strong>MusiBingo</strong> est une plateforme web de bingo musical en temps réel. Un <em>hôte</em> crée une partie en choisissant une playlist ; les joueurs la rejoignent avec un code, chacun reçoit une carte différente et doit marquer les chansons au fil des extraits de <strong>30 secondes</strong>.",
+    "projectP2": "Le premier à compléter une ligne ou la carte entière gagne. Simple, palpitant et parfait pour toute réunion : anniversaires, soirées d'adieu, soirées jeux ou juste pour passer un bon moment.",
+    "featuresLabel": "✨ Fonctionnalités",
+    "featuresTitle": "Pourquoi MusiBingo ?",
+    "f1Title": "Playlists pour chaque moment",
+    "f1Desc": "Plus de 15 playlists prédéfinies dans plusieurs genres et décennies, ou crée la tienne avec les chansons que tu veux.",
+    "f2Title": "Multijoueur en temps réel",
+    "f2Desc": "Partage un code de 6 lettres et joue avec tes amis depuis n'importe quel appareil, instantanément.",
+    "f3Title": "Cartes uniques",
+    "f3Desc": "Chaque joueur reçoit une carte différente générée automatiquement, imprimable en PDF.",
+    "f4Title": "Aperçus de 30 secondes",
+    "f4Desc": "Les chansons jouent directement dans le navigateur grâce à l'API Deezer — aucun lecteur externe requis.",
+    "howLabel": "🎯 En 3 étapes",
+    "howTitle": "Comment joue-t-on ?",
+    "h1Title": "Choisis ta playlist",
+    "h1Desc": "L'hôte choisit une playlist prédéfinie ou en crée une personnalisée avec ses chansons préférées.",
+    "h2Title": "Invite tes joueurs",
+    "h2Desc": "Partage le code de partie. Les joueurs rejoignent en scannant le QR ou en saisissant le code de 6 lettres.",
+    "h3Title": "À jouer !",
+    "h3Desc": "La musique joue, vous marquez les chansons sur votre carte et le premier à la compléter gagne.",
+    "moiraLabel": "Projet développé par",
+    "moiraDesc1": "MoiraOrdo est une organisation de développement créatif dédiée à la création d'expériences web uniques, fonctionnelles et pleines de caractère. La technologie au service des personnes nous passionne et nous aimons que chaque projet soit unique.",
+    "moiraDesc2": "MusiBingo est né de l'idée d'unir musique, jeu et technologie dans un produit que les gens ont vraiment envie d'utiliser. Nous espérons que tu l'apprécieras autant que nous avons aimé le créer. 🎵",
+    "visitMoira": "Visiter MoiraOrdo →",
+    "techLabel": "🛠️ Stack technique",
+    "techTitle": "Construit avec",
+    "ctaTitle": "Prêt à jouer ?",
+    "ctaSubtitle": "Crée une partie en quelques secondes et défie tes amis.",
+    "createGame": "Créer une partie",
+    "joinGame": "Rejoindre une partie"
+  },
+  "legal": {
+    "lastUpdated": "Dernière mise à jour :",
+    "placeholder": "[À COMPLÉTER]",
+    "avisoTitle": "Mentions Légales",
+    "privacidadTitle": "Politique de Confidentialité",
+    "cookiesTitle": "Politique des Cookies"
+  },
+  "donate": {
+    "label": "💶 Soutenir le projet",
+    "title": "Pourquoi je demande ton soutien ?",
+    "p1": "Maintenir des plateformes comme MusiBingo et développer de nouveaux titres demande bien plus que du temps. Il y a des coûts de serveurs, de domaines, d'outils de développement et des heures de café (beaucoup de café !).",
+    "p2": "Jusqu'à présent, j'ai tout financé de ma poche, mais pour réaliser les nouveaux développements que j'ai en tête, j'ai besoin d'un petit coup de pouce de la communauté.",
+    "destinationTitle": "À quoi serviront les dons ?",
+    "destinationLeadin": "Ta contribution, aussi petite soit-elle, ira directement vers :",
+    "d1Title": "Nouvelles fonctionnalités",
+    "d1Desc": "Améliorer MusiBingo avec de nouveaux modes de jeu demandés par vous.",
+    "d2Title": "Nouvelles sorties",
+    "d2Desc": "Développer deux nouveaux prototypes de jeux gratuits que j'ai déjà en préparation.",
+    "d3Title": "Infrastructure",
+    "d3Desc": "S'assurer que les sites continuent de tourner même quand tout le monde veut jouer en même temps.",
+    "d4Title": "Indépendance",
+    "d4Desc": "Pouvoir consacrer plus de temps de qualité à développer du contenu pour la communauté.",
+    "ctaTitle": "Ce n'est pas seulement un don, c'est un investissement dans le plaisir",
+    "ctaP1": "Si tu as déjà joué à MusiBingo ou si tu aimes la philosophie de MoiraOrdo, c'est la meilleure façon de dire \"merci !\".",
+    "ctaP2": "Il n'y a aucune obligation, mais si tu peux contribuer du prix d'une boisson ou d'une pizza, tu m'aideras à continuer à créer des jeux que n'importe qui, partout dans le monde, peut apprécier gratuitement.",
+    "thanks": "Merci de faire partie de ce voyage et de soutenir le développement indépendant !",
+    "paypalLabel": "Scanner pour payer via PayPal",
+    "gofundmeBtn": "Donner sur GoFundMe"
   }
 }

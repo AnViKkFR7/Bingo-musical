@@ -89,6 +89,13 @@ export function ResultsPage() {
           </Link>
         </div>
 
+        <div className={styles.donateNudge}>
+          <p className={styles.donateNudgeText}>{t('results.donatePrompt')}</p>
+          <Link to="/sobre-nosotros#donar" className={`btn ${styles.donateNudgeBtn}`}>
+            {t('results.donateBtn')}
+          </Link>
+        </div>
+
         {/* Vista previa del cartón (colapsada en móvil) */}
         {currentBoard && boardCells.length > 0 && (
           <details className={styles.boardDetails}>

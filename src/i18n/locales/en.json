@@ -49,7 +49,11 @@
     "startGame": "Start game!",
     "waitingForHost": "Waiting for the host to start the game...",
     "youAreHost": "You are the host",
-    "playlistLabel": "Playlist"
+    "playlistLabel": "Playlist",
+    "whatsappText": "I'm inviting you to play MusiBingo! Join with the code {{code}} at: {{url}}",
+    "showQR": "QR Code",
+    "hideQR": "Hide QR",
+    "qrHint": "Scan to join the game"
   },
   "game": {
     "nowPlaying": "Now playing",
@@ -81,7 +85,9 @@
     "backHome": "Back to home",
     "yourBoard": "Your final board",
     "markedTracks": "Marked songs",
-    "totalPlayed": "Songs played"
+    "totalPlayed": "Songs played",
+    "donatePrompt": "Did you enjoy the game? Help the community keep growing",
+    "donateBtn": "Support the project 💛"
   },
   "errors": {
     "gameNotFound": "Game not found",
@@ -136,6 +142,88 @@
     "emailPlaceholder": "your@email.com",
     "emailSend": "Send",
     "emailSent": "Email sent!",
-    "notEnoughTracks": "The playlist doesn't have enough songs for a {{size}}×{{size}} card (minimum {{needed}})"
+    "notEnoughTracks": "The playlist doesn't have enough songs for a {{size}}×{{size}} card (minimum {{needed}})"  },
+  "footer": {
+    "about": "About us",
+    "legal": "Legal notice",
+    "privacy": "Privacy",
+    "cookies": "Cookies",
+    "madeBy": "Developed by"
+  },
+  "cookies": {
+    "title": "We use cookies",
+    "text": "We use our own and third-party cookies for the proper functioning of the website, to show advertising and to analyse its use. You can accept all, choose only the essential ones or reject them.",
+    "acceptAll": "Accept all",
+    "essentialOnly": "Essential only",
+    "reject": "Reject",
+    "policyLink": "Cookie policy"
+  },
+  "about": {
+    "badge": "About the project",
+    "heroTitle": "The musical bingo that sets",
+    "heroTitleSpan": "the rhythm to your gatherings",
+    "heroSubtitle": "Gather your friends, family or colleagues and turn your favourite songs into a unique gaming experience.",
+    "playNow": "Play now →",
+    "projectLabel": "🎤 The project",
+    "projectTitle": "What is MusiBingo?",
+    "projectP1": "<strong>MusiBingo</strong> is a real-time musical bingo web platform. A <em>host</em> creates a game by choosing a playlist; players join with a code, each one receives a different card and must mark the songs as 30-second <strong>snippets</strong> play.",
+    "projectP2": "The first to complete a line or the whole card wins. Simple, exciting and perfect for any occasion: birthdays, farewell parties, game nights or just a good time.",
+    "featuresLabel": "✨ Features",
+    "featuresTitle": "Why MusiBingo?",
+    "f1Title": "Playlists for every moment",
+    "f1Desc": "More than 15 pre-built playlists across multiple genres and decades, or create your own with the songs you want.",
+    "f2Title": "Real-time multiplayer",
+    "f2Desc": "Share a 6-letter code and play with your friends from any device, instantly.",
+    "f3Title": "Unique cards",
+    "f3Desc": "Each player gets a different card generated automatically, printable as a PDF.",
+    "f4Title": "30-second previews",
+    "f4Desc": "Songs play directly in the browser thanks to the Deezer API — no external player needed.",
+    "howLabel": "🎯 In 3 steps",
+    "howTitle": "How do you play?",
+    "h1Title": "Choose your playlist",
+    "h1Desc": "The host picks a pre-built playlist or creates a custom one with their favourite songs.",
+    "h2Title": "Invite your players",
+    "h2Desc": "Share the game code. Players join by scanning the QR or entering the 6-letter code.",
+    "h3Title": "Let's play!",
+    "h3Desc": "The music plays, you mark the songs on your card, and the first to complete it wins.",
+    "moiraLabel": "Project developed by",
+    "moiraDesc1": "MoiraOrdo is a creative development organisation committed to building unique, functional and characterful web experiences. We are passionate about technology in service of people, and we love giving each of our projects its own identity.",
+    "moiraDesc2": "MusiBingo was born out of the idea of bringing music, gaming and technology together in a product that people genuinely want to use. We hope you enjoy it as much as we enjoyed building it. 🎵",
+    "visitMoira": "Visit MoiraOrdo →",
+    "techLabel": "🛠️ Tech stack",
+    "techTitle": "Built with",
+    "ctaTitle": "Ready to play?",
+    "ctaSubtitle": "Create a game in seconds and challenge your friends.",
+    "createGame": "Create game",
+    "joinGame": "Join a game"
+  },
+  "legal": {
+    "lastUpdated": "Last updated:",
+    "placeholder": "[TO BE FILLED IN]",
+    "avisoTitle": "Legal Notice",
+    "privacidadTitle": "Privacy Policy",
+    "cookiesTitle": "Cookie Policy"
+  },
+  "donate": {
+    "label": "💶 Support the project",
+    "title": "Why am I asking for your support?",
+    "p1": "Maintaining platforms like MusiBingo and developing new titles requires much more than time. There are server costs, domains, development tools and hours of coffee (lots of coffee!).",
+    "p2": "So far I have funded everything out of my own pocket, but to carry out the new developments I have in mind, I need a small push from the community.",
+    "destinationTitle": "What will the donations be used for?",
+    "destinationLeadin": "Your contribution, however small, will go directly towards:",
+    "d1Title": "New Features",
+    "d1Desc": "Improving MusiBingo with new game modes requested by you.",
+    "d2Title": "New Releases",
+    "d2Desc": "Developing two new prototypes of free games that I already have in the works.",
+    "d3Title": "Infrastructure",
+    "d3Desc": "Making sure the websites keep running smoothly even when everyone wants to play at once.",
+    "d4Title": "Independence",
+    "d4Desc": "Being able to dedicate more quality time to developing content for the community.",
+    "ctaTitle": "It's not just a donation, it's an investment in fun",
+    "ctaP1": "If you've ever played a round of MusiBingo or you like the MoiraOrdo philosophy, this is the best way to say \"thank you!\".",
+    "ctaP2": "There's no obligation, but if you can chip in the price of a soft drink or a pizza, you'll be helping me keep creating games that anyone, anywhere in the world, can enjoy for free.",
+    "thanks": "Thank you for being part of this journey and for supporting independent development!",
+    "paypalLabel": "Scan to donate via PayPal",
+    "gofundmeBtn": "Donate on GoFundMe"
   }
 }

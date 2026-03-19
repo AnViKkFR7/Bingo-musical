@@ -7,6 +7,10 @@ import { LobbyPage } from './pages/LobbyPage'
 import { GamePage } from './pages/GamePage'
 import { ResultsPage } from './pages/ResultsPage'
 import { PrintPage } from './pages/PrintPage'
+import { SobreNosotrosPage } from './pages/SobreNosotrosPage'
+import { AvisoLegalPage } from './pages/legal/AvisoLegalPage'
+import { PoliticaPrivacidadPage } from './pages/legal/PoliticaPrivacidadPage'
+import { PoliticaCookiesPage } from './pages/legal/PoliticaCookiesPage'
 
 function LoadingFallback() {
   return (
@@ -28,6 +32,10 @@ export function App() {
           <Route path="/jugar/:gameCode" element={<GamePage />} />
           <Route path="/resultados/:gameCode" element={<ResultsPage />} />
           <Route path="/imprimir" element={<PrintPage />} />
+          <Route path="/sobre-nosotros" element={<SobreNosotrosPage />} />
+          <Route path="/aviso-legal" element={<AvisoLegalPage />} />
+          <Route path="/politica-privacidad" element={<PoliticaPrivacidadPage />} />
+          <Route path="/politica-cookies" element={<PoliticaCookiesPage />} />
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

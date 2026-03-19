@@ -1,0 +1,111 @@
+.overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 500;
+  padding: 0 var(--space-4) var(--space-6);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.panel {
+  background: var(--color-surface);
+  border: 1px solid rgba(20, 218, 201, 0.35);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6) var(--space-8);
+  max-width: 680px;
+  width: 100%;
+  box-shadow: var(--shadow-lg), 0 0 48px rgba(20, 218, 201, 0.12);
+  pointer-events: all;
+  animation: slideUpPanel 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpPanel {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.title {
+  font-size: var(--font-size-lg);
+  font-weight: 900;
+  color: var(--color-text);
+}
+
+.text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  margin-bottom: var(--space-5);
+}
+
+.link {
+  color: var(--color-teal);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.btnAccept,
+.btnEssential {
+  flex: 1;
+  min-width: 140px;
+}
+
+.btnReject {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  transition: color var(--transition-fast);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.btnReject:hover {
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+}
+
+@media (max-width: 520px) {
+  .panel {
+    padding: var(--space-5) var(--space-5);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .btnAccept,
+  .btnEssential {
+    width: 100%;
+  }
+
+  .btnReject {
+    align-self: center;
+  }
+}

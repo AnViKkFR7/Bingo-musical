@@ -34,7 +34,7 @@ export function PresetPlaylistGrid({ selectedId, onSelect }: Props) {
       setLoading(false)
     }
     load()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (loading) return <p className={styles.status}>{t('common.loading')}</p>
@@ -60,7 +60,7 @@ export function PresetPlaylistGrid({ selectedId, onSelect }: Props) {
       </div>
       {visible.length > 0 && (
         <div className={styles.grid}>
-          {visible.map(playlist => (
+          {visible.map((playlist, idx) => (
             <button
               key={playlist.id}
               type="button"
@@ -72,7 +72,10 @@ export function PresetPlaylistGrid({ selectedId, onSelect }: Props) {
                   src={playlist.image_url}
                   alt={playlist.name}
                   className={styles.image}
-                  loading="lazy"
+                  width={200}
+                  height={200}
+                  loading={idx < perRow ? 'eager' : 'lazy'}
+                  decoding="async"
                 />
               ) : (
                 <div className={styles.imagePlaceholder}>♪</div>

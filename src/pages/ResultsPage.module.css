@@ -118,6 +118,48 @@
   }
 }
 
+/* ---- Donation nudge ---- */
+.donateNudge {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255, 210, 0, 0.07);
+  border: 1px solid rgba(255, 210, 0, 0.25);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.donateNudgeText {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.donateNudgeBtn {
+  background: linear-gradient(135deg, #f7971e, #ffd200);
+  color: #0d1117;
+  font-weight: 900;
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-8);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.donateNudgeBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 210, 0, 0.4);
+}
+
 /* ---- Board preview (collapsible) ---- */
 .boardDetails {
   width: 100%;

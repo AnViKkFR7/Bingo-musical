@@ -1,12 +1,16 @@
 import { useAudio } from '../../hooks/useAudio'
 import styles from './AudioPlayer.module.css'
 
+interface Props {
+  onTrackEnd?: () => void
+}
+
 /**
  * AudioPlayer — solo renderiza en el dispositivo del host.
  * Obtiene el preview de Deezer al vuelo (URL fresca cada vez que cambia la canción).
  */
-export function AudioPlayer() {
-  const { isPlaying, progress, hasError, isFetchingPreview, previewUrl, togglePlay } = useAudio()
+export function AudioPlayer({ onTrackEnd }: Props) {
+  const { isPlaying, progress, hasError, isFetchingPreview, previewUrl, togglePlay } = useAudio(onTrackEnd)
 
   return (
     <div className={styles.player}>

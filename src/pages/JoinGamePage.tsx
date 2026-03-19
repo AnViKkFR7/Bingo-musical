@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase, ensureAuth } from '../lib/supabase'
 import { saveSession } from '../lib/utils'
@@ -10,9 +10,10 @@ import styles from './JoinGamePage.module.css'
 export function JoinGamePage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const { reset } = useGameStore()
 
-  const [code, setCode] = useState('')
+  const [code, setCode] = useState(() => searchParams.get('code') ?? '')
   const [alias, setAlias] = useState('')
   const [sameRoom, setSameRoom] = useState(true)
   const [loading, setLoading] = useState(false)

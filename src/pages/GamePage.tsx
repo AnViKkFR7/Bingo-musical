@@ -68,6 +68,24 @@ export function GamePage() {
 
   const boardComplete = boardCells.length > 0 && boardCells.every(c => c.isMarked)
 
+  async function handleAutoNext() {
+    if (!game) return
+    const nextIndex = game.current_track_index + 1
+    if (nextIndex >= gameTracks.length) return
+    const nextTrack = gameTracks[nextIndex]
+    if (!nextTrack) return
+    const { error } = await supabase
+      .from('games')
+      .update({ current_track_index: nextIndex })
+      .eq('id', game.id)
+    if (!error) {
+      await supabase
+        .from('game_tracks')
+        .update({ played_at: new Date().toISOString() })
+        .eq('id', nextTrack.id)
+    }
+  }
+
   async function handleEndGame() {
     if (!game) return
     await supabase
@@ -117,7 +135,9 @@ export function GamePage() {
           />
 
           {/* 2. Reproductor de audio */}
-          {(isHost || hearMusic) && currentTrack && <AudioPlayer />}
+          {(isHost || hearMusic) && currentTrack && (
+            <AudioPlayer onTrackEnd={isHost ? handleAutoNext : undefined} />
+          )}
 
           {/* 3. Siguiente canción (solo DJ) */}
           {isHost && (
