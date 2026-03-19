@@ -2,14 +2,22 @@ import { useTranslation } from 'react-i18next'
 import type { GameTrack } from '../../types'
 import styles from './NowPlaying.module.css'
 
+const MYSTERY_AVATARS = [
+  'Adobe%20Express%20-%20file.png',
+  'Adobe%20Express%20-%20file%20-%20copia%20(3).png',
+  'Adobe%20Express%20-%20file%20-%20copia%20(4).png',
+  'Adobe%20Express%20-%20file%20-%20copia%20(7).png',
+]
+
 interface Props {
   track: GameTrack | null
   progress: number  // 0-100
   tracksPlayed: number
   totalTracks: number
+  revealed?: boolean
 }
 
-export function NowPlaying({ track, progress, tracksPlayed, totalTracks }: Props) {
+export function NowPlaying({ track, progress, tracksPlayed, totalTracks, revealed = true }: Props) {
   const { t } = useTranslation()
 
   if (!track) {
@@ -29,24 +37,38 @@ export function NowPlaying({ track, progress, tracksPlayed, totalTracks }: Props
         </span>
       </div>
 
-      <div className={styles.trackInfo}>
-        {track.album_image_url ? (
-          <img
-            src={track.album_image_url}
-            alt={track.album_name ?? track.name}
-            className={styles.albumArt}
-          />
-        ) : (
-          <div className={styles.albumArtPlaceholder}>♪</div>
-        )}
-        <div className={styles.details}>
-          <span className={styles.trackName}>{track.name}</span>
-          <span className={styles.artist}>{track.artist}</span>
-          {track.album_name && (
-            <span className={styles.album}>{track.album_name}</span>
+      {revealed ? (
+        <div className={styles.trackInfo}>
+          {track.album_image_url ? (
+            <img
+              src={track.album_image_url}
+              alt={track.album_name ?? track.name}
+              className={styles.albumArt}
+            />
+          ) : (
+            <div className={styles.albumArtPlaceholder}>♪</div>
           )}
+          <div className={styles.details}>
+            <span className={styles.trackName}>{track.name}</span>
+            <span className={styles.artist}>{track.artist}</span>
+            {track.album_name && (
+              <span className={styles.album}>{track.album_name}</span>
+            )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className={styles.mystery}>
+          <img
+            src={`/avatares/${MYSTERY_AVATARS[track.play_order % MYSTERY_AVATARS.length]}`}
+            className={styles.mysteryAvatar}
+            alt=""
+          />
+          <div className={styles.mysteryText}>
+            <span className={styles.mysteryHint}>🎵 ¿Reconoces la canción?</span>
+            <span className={styles.mysterySub}>La info aparece en unos segundos…</span>
+          </div>
+        </div>
+      )}
 
       <div className={styles.progressBar}>
         <div

@@ -1,16 +1,17 @@
 import { useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { useGameStore } from '../store/gameStore'
+import { loadSession } from '../lib/utils'
 import type { Player } from '../types'
 
 /**
- * Carga los jugadores de la partida y se suscribe a cambios en tiempo real.
- * Usado en el lobby y en el panel del DJ.
+ * Carga los jugadores de la partida con polling cada segundo + Realtime como respaldo.
+ * El polling garantiza que la lista se actualice aunque Realtime falle.
  */
 export function usePlayers(gameId: string | undefined) {
-  const { setPlayers, addPlayer, removePlayer } = useGameStore()
+  const { setPlayers, addPlayer, removePlayer, setCurrentPlayer } = useGameStore()
 
-  // Carga inicial
+  // Polling cada segundo (carga inicial + refresco continuo)
   useEffect(() => {
     if (!gameId) return
 
@@ -25,11 +26,22 @@ export function usePlayers(gameId: string | undefined) {
 
       if (cancelled || error || !data) return
       setPlayers(data as Player[])
+
+      // Sincronizar currentPlayer con los datos reales del servidor
+      const session = loadSession()
+      if (session) {
+        const me = (data as Player[]).find(p => p.id === session.player_id)
+        if (me) setCurrentPlayer(me)
+      }
     }
 
     fetchPlayers()
-    return () => { cancelled = true }
-  }, [gameId, setPlayers])
+    const interval = setInterval(fetchPlayers, 1000)
+    return () => {
+      cancelled = true
+      clearInterval(interval)
+    }
+  }, [gameId, setPlayers, setCurrentPlayer])
 
   // Suscripción Realtime
   useEffect(() => {

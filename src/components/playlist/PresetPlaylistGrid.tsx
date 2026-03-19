@@ -14,6 +14,9 @@ export function PresetPlaylistGrid({ selectedId, onSelect }: Props) {
   const [playlists, setPlaylists] = useState<Playlist[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [expanded, setExpanded] = useState(false)
+  // 0 on mobile (< 480px) = hidden initially; 4 on desktop/tablet = 1 row
+  const [perRow] = useState(() => window.innerWidth < 480 ? 0 : 4)
 
   useEffect(() => {
     async function load() {
@@ -38,36 +41,52 @@ export function PresetPlaylistGrid({ selectedId, onSelect }: Props) {
   if (error) return <p className={styles.error}>{error}</p>
   if (!playlists.length) return null
 
+  const visible = expanded ? playlists : playlists.slice(0, perRow)
+  const hasMore = playlists.length > perRow
+
   return (
     <section className={styles.section}>
-      <h3 className={styles.sectionTitle}>{t('create.presets')}</h3>
-      <div className={styles.grid}>
-        {playlists.map(playlist => (
+      <div className={styles.header}>
+        <h3 className={styles.sectionTitle}>{t('create.presets')}</h3>
+        {hasMore && (
           <button
-            key={playlist.id}
             type="button"
-            className={`${styles.card} ${selectedId === playlist.spotify_id ? styles.selected : ''}`}
-            onClick={() => onSelect(playlist.spotify_id)}
+            className={styles.toggleButton}
+            onClick={() => setExpanded(e => !e)}
           >
-            {playlist.image_url ? (
-              <img
-                src={playlist.image_url}
-                alt={playlist.name}
-                className={styles.image}
-                loading="lazy"
-              />
-            ) : (
-              <div className={styles.imagePlaceholder}>♪</div>
-            )}
-            <div className={styles.info}>
-              <span className={styles.name}>{playlist.name}</span>
-              {playlist.owner_name && (
-                <span className={styles.owner}>{playlist.owner_name}</span>
-              )}
-            </div>
+            {expanded ? `↑ ${t('create.showLess')}` : `↓ ${t('create.showMore')}`}
           </button>
-        ))}
+        )}
       </div>
+      {visible.length > 0 && (
+        <div className={styles.grid}>
+          {visible.map(playlist => (
+            <button
+              key={playlist.id}
+              type="button"
+              className={`${styles.card} ${selectedId === playlist.spotify_id ? styles.selected : ''}`}
+              onClick={() => onSelect(playlist.spotify_id)}
+            >
+              {playlist.image_url ? (
+                <img
+                  src={playlist.image_url}
+                  alt={playlist.name}
+                  className={styles.image}
+                  loading="lazy"
+                />
+              ) : (
+                <div className={styles.imagePlaceholder}>♪</div>
+              )}
+              <div className={styles.info}>
+                <span className={styles.name}>{playlist.name}</span>
+                {playlist.owner_name && (
+                  <span className={styles.owner}>{playlist.owner_name}</span>
+                )}
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
     </section>
   )
 }

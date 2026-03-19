@@ -25,7 +25,9 @@
     "selectedPlaylist": "Playlist sélectionnée",
     "changePlaylist": "Changer de playlist",
     "step1": "Choisir playlist",
-    "step2": "Configurer la partie"
+    "step2": "Configurer la partie",
+    "showMore": "Voir plus",
+    "showLess": "Voir moins"
   },
   "join": {
     "title": "Rejoindre une partie",
@@ -95,6 +97,7 @@
     "yes": "Oui",
     "no": "Non",
     "by": "par",
-    "tracks": "chansons"
+    "tracks": "chansons",
+    "scrollToTop": "Aller en haut"
   }
 }

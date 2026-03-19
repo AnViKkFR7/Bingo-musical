@@ -7,6 +7,7 @@ import { useGame } from '../hooks/useGame'
 import { useGameTracks } from '../hooks/useGameTracks'
 import { useBoard } from '../hooks/useBoard'
 import { usePlayers } from '../hooks/usePlayers'
+import { useTrackReveal } from '../hooks/useTrackReveal'
 import { useGameStore } from '../store/gameStore'
 import { Layout } from '../components/ui/Layout'
 import { AdSlot } from '../components/ads/AdSlot'
@@ -22,7 +23,7 @@ const SLOT_GAME_SIDEBAR = import.meta.env.VITE_ADSENSE_SLOT_GAME_SIDEBAR as stri
 
 export function GamePage() {
   const { gameCode } = useParams<{ gameCode: string }>()
-  const { t: _t } = useTranslation()
+  const { t } = useTranslation()
   const session = useMemo(() => loadSession(), [])
 
   useGame(gameCode)
@@ -43,6 +44,7 @@ export function GamePage() {
 
   const currentTrack = getCurrentTrack()
   const isHost = currentPlayer?.is_host ?? false
+  const revealed = useTrackReveal(currentTrack)
 
   const boardCells: BoardCell[] = useMemo(() => {
     if (!currentBoard || !gameTracks.length) return []
@@ -84,7 +86,7 @@ export function GamePage() {
 
   if (isLoading || !game) {
     return (
-      <Layout hideHeader hideAvatars>
+      <Layout hideHeader>
         <div className={styles.center}>
           <div className="spinner" />
         </div>
@@ -93,9 +95,13 @@ export function GamePage() {
   }
 
   const tracksPlayed = gameTracks.filter(gt => gt.played_at != null).length
+  const playedTracksList = gameTracks.filter(gt => gt.played_at != null)
+  const historyTracks = revealed
+    ? playedTracksList
+    : playedTracksList.filter(gt => gt.id !== currentTrack?.id)
 
   return (
-    <Layout hideHeader hideAvatars>
+    <Layout hideHeader>
       <div className={styles.layout}>
         <main className={styles.main}>
           <NowPlaying
@@ -103,6 +109,7 @@ export function GamePage() {
             progress={0}
             tracksPlayed={tracksPlayed}
             totalTracks={gameTracks.length}
+            revealed={revealed}
           />
 
           {isHost && (
@@ -111,6 +118,7 @@ export function GamePage() {
               currentTrackIndex={game.current_track_index}
               gameTracks={gameTracks}
               onEndGame={handleEndGame}
+              hideHistory
             />
           )}
 
@@ -128,6 +136,30 @@ export function GamePage() {
                 onClaimBingo={handleClaimBingo}
               />
             </>
+          )}
+
+          {isHost && historyTracks.length > 0 && (
+            <div className={`card ${styles.history}`}>
+              <h4 className={styles.historyTitle}>{t('game.tracksPlayed')}</h4>
+              <ul className={styles.historyList}>
+                {[...historyTracks].reverse().map(track => (
+                  <li key={track.id} className={styles.historyItem}>
+                    {track.album_image_url && (
+                      <img
+                        src={track.album_image_url}
+                        alt={track.name}
+                        className={styles.historyThumb}
+                        loading="lazy"
+                      />
+                    )}
+                    <div className={styles.historyInfo}>
+                      <span className={styles.historyName}>{track.name}</span>
+                      <span className={styles.historyArtist}>{track.artist}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
         </main>
 

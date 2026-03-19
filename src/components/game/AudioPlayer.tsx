@@ -1,18 +1,12 @@
-import { useTranslation } from 'react-i18next'
 import { useAudio } from '../../hooks/useAudio'
 import styles from './AudioPlayer.module.css'
 
-interface Props {
-  previewUrl: string | null
-}
-
 /**
  * AudioPlayer — solo renderiza en el dispositivo del host.
- * Reproduce el preview MP3 de la canción actual.
+ * Obtiene el preview de Deezer al vuelo (URL fresca cada vez que cambia la canción).
  */
-export function AudioPlayer({ previewUrl }: Props) {
-  const { t } = useTranslation()
-  const { playing, progress, togglePlay } = useAudio(previewUrl)
+export function AudioPlayer() {
+  const { isPlaying, progress, hasError, isFetchingPreview, previewUrl, togglePlay } = useAudio()
 
   return (
     <div className={styles.player}>
@@ -20,10 +14,12 @@ export function AudioPlayer({ previewUrl }: Props) {
         type="button"
         className={`btn btn-secondary ${styles.playBtn}`}
         onClick={togglePlay}
-        aria-label={playing ? 'Pause' : 'Play'}
-        disabled={!previewUrl}
+        aria-label={isPlaying ? 'Pause' : 'Play'}
+        disabled={!previewUrl || isFetchingPreview}
       >
-        {playing ? '⏸' : '▶'}
+        {isFetchingPreview
+          ? <span className={styles.spinner} aria-hidden="true" />
+          : isPlaying ? '⏸' : '▶'}
       </button>
 
       <div className={styles.progressBar}>
@@ -33,7 +29,10 @@ export function AudioPlayer({ previewUrl }: Props) {
         />
       </div>
 
-      {!previewUrl && (
+      {isFetchingPreview && (
+        <span className={styles.noPreview}>Buscando en Deezer…</span>
+      )}
+      {!isFetchingPreview && !previewUrl && !hasError && (
         <span className={styles.noPreview}>Sin preview</span>
       )}
     </div>

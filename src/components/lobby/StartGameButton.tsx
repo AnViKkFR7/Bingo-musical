@@ -31,7 +31,7 @@ export function StartGameButton({
   minPlayers = 1,
 }: Props) {
   const { t } = useTranslation()
-  const { players, allBoards } = useGameStore()
+  const { players } = useGameStore()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -40,22 +40,55 @@ export function StartGameButton({
     setError(null)
 
     try {
-      // 1. Obtener las tracks frescas de Spotify
-      const res = await fetch(
-        `${SUPABASE_URL}/functions/v1/spotify-get-playlist-tracks`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-          },
-          body: JSON.stringify({ spotify_playlist_id: playlistSpotifyId }),
-        }
-      )
+      // 1. Obtener tracks: desde preset_tracks (Supabase) o desde Spotify según is_preset
+      let tracks: SpotifyTrack[]
 
-      if (!res.ok) throw new Error('fetch_tracks_failed')
-      const { tracks } = await res.json() as { tracks: SpotifyTrack[] }
-      if (!tracks?.length) throw new Error('no_tracks')
+      const { data: playlist } = await supabase
+        .from('playlists')
+        .select('id, is_preset')
+        .eq('spotify_id', playlistSpotifyId)
+        .single()
+
+      if (playlist?.is_preset) {
+        // Playlist destacada: leer canciones directamente desde Supabase
+        // sin llamar a la API de Spotify (playlists editoriales de Spotify
+        // no son accesibles con Client Credentials en modo desarrollo)
+        const { data: presetTracks, error: ptErr } = await supabase
+          .from('preset_tracks')
+          .select('id, name, artist, album_image_url')
+          .eq('playlist_id', playlist.id)
+          .order('sort_order', { ascending: true })
+
+        if (ptErr) throw ptErr
+        if (!presetTracks?.length) throw new Error('no_tracks')
+
+        tracks = presetTracks.map(pt => ({
+          spotify_id: pt.id,            // UUID del preset como identificador único
+          name: pt.name,
+          artist: pt.artist,
+          album_image_url: pt.album_image_url ?? undefined,
+        }))
+      } else {
+        // Playlist de usuario: obtener tracks frescas desde Spotify
+        const res = await fetch(
+          `${SUPABASE_URL}/functions/v1/spotify-get-playlist-tracks`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            },
+            body: JSON.stringify({ spotify_playlist_id: playlistSpotifyId }),
+          }
+        )
+
+        if (!res.ok) throw new Error('fetch_tracks_failed')
+        const data = await res.json() as { tracks: SpotifyTrack[] }
+        if (!data.tracks?.length) throw new Error('no_tracks')
+        tracks = data.tracks
+      }
+
+      if (!tracks.length) throw new Error('no_tracks')
 
       // 2. Barajar y asignar play_order
       const shuffledTracks = shuffle(tracks)
@@ -76,11 +109,18 @@ export function StartGameButton({
         .insert(gameTracks)
       if (tracksErr) throw tracksErr
 
-      // 4. Generar cartones aleatorios para cada board usando los play_orders asignados
+      // 4. Obtener todos los boards de la partida desde la BD y asignar track_positions
       const needed = boardSize * boardSize
       const allPlayOrders = gameTracks.map(gt => gt.play_order)
 
-      for (const board of allBoards) {
+      const { data: boards, error: boardsFetchErr } = await supabase
+        .from('boards')
+        .select('id')
+        .eq('game_id', gameId)
+
+      if (boardsFetchErr || !boards?.length) throw boardsFetchErr ?? new Error('no_boards')
+
+      for (const board of boards) {
         const trackPositions = shuffle(allPlayOrders).slice(0, needed)
         await supabase
           .from('boards')

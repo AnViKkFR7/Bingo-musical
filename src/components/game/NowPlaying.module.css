@@ -109,3 +109,43 @@
   border-radius: var(--radius-full);
   transition: width 0.3s ease;
 }
+
+/* ── Placeholder misterioso (antes de revelar la canción) ── */
+.mystery {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.mysteryAvatar {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+  opacity: 0.75;
+  filter: drop-shadow(0 4px 14px rgba(20, 218, 201, 0.35));
+  animation: mysteryFloat 3s ease-in-out infinite;
+}
+
+.mysteryText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.mysteryHint {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-teal);
+}
+
+.mysterySub {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+@keyframes mysteryFloat {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50%       { transform: translateY(-8px) rotate(4deg); }
+}

@@ -10,7 +10,7 @@ interface Props {
 export function PlaylistPreview({ data, boardSize }: Props) {
   const { t } = useTranslation()
   const needed = boardSize * boardSize
-  const hasEnough = data.tracks_with_preview >= needed
+  const hasEnough = data.total_tracks >= needed
 
   return (
     <div className={`card ${styles.preview}`}>
@@ -30,7 +30,7 @@ export function PlaylistPreview({ data, boardSize }: Props) {
             <p className={styles.owner}>{data.playlist.owner_name}</p>
           )}
           <p className={`${styles.count} ${hasEnough ? styles.countOk : styles.countWarn}`}>
-            {data.tracks_with_preview} / {data.total_tracks} tracks con preview
+            {data.total_tracks} canciones
           </p>
         </div>
       </div>
@@ -38,7 +38,7 @@ export function PlaylistPreview({ data, boardSize }: Props) {
       {!hasEnough && (
         <p className={styles.warning}>
           {t('create.notEnoughTracksWarning', {
-            count: data.tracks_with_preview,
+            count: data.total_tracks,
             needed,
             size: boardSize,
           })}

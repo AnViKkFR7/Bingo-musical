@@ -10,9 +10,11 @@ interface Props {
   currentTrackIndex: number
   gameTracks: GameTrack[]
   onEndGame: () => void
+  /** Oculta el historial de canciones (se renderiza fuera, debajo del cartón) */
+  hideHistory?: boolean
 }
 
-export function DJPanel({ gameId, currentTrackIndex, gameTracks, onEndGame }: Props) {
+export function DJPanel({ gameId, currentTrackIndex, gameTracks, onEndGame, hideHistory }: Props) {
   const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
 
@@ -65,7 +67,7 @@ export function DJPanel({ gameId, currentTrackIndex, gameTracks, onEndGame }: Pr
 
         {/* AudioPlayer solo en el host */}
         {currentTrack && (
-          <AudioPlayer previewUrl={currentTrack.preview_url ?? null} />
+          <AudioPlayer />
         )}
 
         <button
@@ -78,7 +80,7 @@ export function DJPanel({ gameId, currentTrackIndex, gameTracks, onEndGame }: Pr
       </div>
 
       {/* Historial */}
-      {playedTracks.length > 0 && (
+      {!hideHistory && playedTracks.length > 0 && (
         <div className={styles.history}>
           <h4 className={styles.historyTitle}>{t('game.tracksPlayed')}</h4>
           <ul className={styles.historyList}>

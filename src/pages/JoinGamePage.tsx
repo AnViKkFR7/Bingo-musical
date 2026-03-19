@@ -62,22 +62,39 @@ export function JoinGamePage() {
         return
       }
 
-      // 3. Necesitamos al menos verificar que hay tracks suficientes
-      const res = await fetch(`${SUPABASE_URL}/functions/v1/spotify-get-playlist-tracks`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({ spotify_playlist_id: game.playlist_spotify_id }),
-      })
-      if (!res.ok) throw new Error('fetch_tracks_failed')
-      const tracksData = await res.json()
-
+      // 3. Verificar que hay tracks suficientes
       const needed = game.board_size * game.board_size
-      if ((tracksData.tracks_with_preview ?? 0) < needed) {
-        setError(t('errors.notEnoughTracks'))
-        return
+
+      const { data: playlistMeta } = await supabase
+        .from('playlists')
+        .select('id, is_preset')
+        .eq('spotify_id', game.playlist_spotify_id)
+        .maybeSingle()
+
+      if (playlistMeta?.is_preset) {
+        const { count } = await supabase
+          .from('preset_tracks')
+          .select('id', { count: 'exact', head: true })
+          .eq('playlist_id', playlistMeta.id)
+        if ((count ?? 0) < needed) {
+          setError(t('errors.notEnoughTracks'))
+          return
+        }
+      } else {
+        const res = await fetch(`${SUPABASE_URL}/functions/v1/spotify-get-playlist-tracks`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({ spotify_playlist_id: game.playlist_spotify_id }),
+        })
+        if (!res.ok) throw new Error('fetch_tracks_failed')
+        const tracksData = await res.json()
+        if ((tracksData.total_tracks ?? 0) < needed) {
+          setError(t('errors.notEnoughTracks'))
+          return
+        }
       }
 
       // 4. Crear jugador

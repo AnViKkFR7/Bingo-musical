@@ -25,7 +25,9 @@
     "selectedPlaylist": "Selected playlist",
     "changePlaylist": "Change playlist",
     "step1": "Choose playlist",
-    "step2": "Configure game"
+    "step2": "Configure game",
+    "showMore": "Show more",
+    "showLess": "Show less"
   },
   "join": {
     "title": "Join a game",
@@ -95,6 +97,7 @@
     "yes": "Yes",
     "no": "No",
     "by": "by",
-    "tracks": "songs"
+    "tracks": "songs",
+    "scrollToTop": "Go to top"
   }
 }

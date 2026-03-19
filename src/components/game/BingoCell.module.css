@@ -3,17 +3,12 @@
   aspect-ratio: 1;
   width: 100%;
   perspective: 700px;
-  cursor: default;
+  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 
 .clickable {
-  cursor: pointer;
-}
-
-.idle {
-  opacity: 0.42;
-  filter: grayscale(65%);
+  /* all unflipped cards are already clickable */
 }
 
 .marking {
@@ -33,7 +28,7 @@
   transform: rotateY(180deg);
 }
 
-.clickable:not(.flipped):hover .inner {
+.wrapper:not(.flipped):hover .inner {
   transform: rotateY(10deg) scale(1.04);
 }
 
@@ -50,38 +45,30 @@
 /* ---- Front face ---- */
 .front {
   background: var(--color-surface-2);
-  border: 2px solid transparent;
+  border: 2px solid var(--color-border);
   display: flex;
   flex-direction: column;
   padding: 4px;
-  gap: 2px;
+  gap: 3px;
   transition: border-color var(--transition-base), box-shadow var(--transition-base);
 }
 
-.clickable .front {
+.wrapper:not(.flipped):hover .front {
   border-color: var(--color-teal);
   box-shadow: 0 0 12px rgba(20, 218, 201, 0.28);
 }
 
-.playOrder {
-  font-size: 0.6rem;
-  font-weight: 900;
-  color: var(--color-teal);
-  line-height: 1;
-  align-self: flex-start;
-  padding: 0 1px;
-}
-
 .image {
   width: 100%;
-  flex: 1;
+  height: 44%;
   object-fit: cover;
   border-radius: var(--radius-sm);
-  min-height: 0;
+  flex-shrink: 0;
 }
 
 .imagePlaceholder {
-  flex: 1;
+  height: 44%;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,29 +76,33 @@
   color: var(--color-text-muted);
   background: var(--color-surface-elevated);
   border-radius: var(--radius-sm);
-  min-height: 0;
 }
 
 .info {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  justify-content: center;
+  gap: 2px;
   min-height: 0;
+  overflow: hidden;
 }
 
 .trackName {
-  font-size: 0.6rem;
+  font-size: 0.68rem;
   font-weight: 800;
   color: var(--color-text);
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.2;
+  line-height: 1.25;
+  white-space: normal;
 }
 
 .artist {
-  font-size: 0.55rem;
-  color: var(--color-text-muted);
+  font-size: 0.6rem;
+  color: var(--color-text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

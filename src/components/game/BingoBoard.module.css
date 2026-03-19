@@ -17,5 +17,7 @@
   .grid {
     gap: var(--space-1);
     padding: var(--space-2);
+    /* Máximo 3 columnas en móvil para que las tarjetas sean legibles */
+    grid-template-columns: repeat(3, 1fr);
   }
 }

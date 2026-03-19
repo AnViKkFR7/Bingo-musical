@@ -13,7 +13,6 @@ export function HomePage() {
     <Layout hideHeader>
       <div className={styles.hero}>
         <img src="/musibingo-logo.png" alt="MusiBingo" className={styles.logo} />
-        <p className={styles.subtitle}>{t('home.subtitle')}</p>
 
         <div className={styles.actions}>
           <Link to="/crear" className={`btn btn-primary ${styles.ctaBtn}`}>

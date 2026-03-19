@@ -25,7 +25,9 @@
     "selectedPlaylist": "Llista seleccionada",
     "changePlaylist": "Canviar llista",
     "step1": "Tria llista",
-    "step2": "Configura la partida"
+    "step2": "Configura la partida",
+    "showMore": "Veure més",
+    "showLess": "Veure menys"
   },
   "join": {
     "title": "Unir-se a una partida",
@@ -95,6 +97,7 @@
     "yes": "Sí",
     "no": "No",
     "by": "per",
-    "tracks": "cançons"
+    "tracks": "cançons",
+    "scrollToTop": "Anar a dalt"
   }
 }

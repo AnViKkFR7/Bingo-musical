@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../lib/supabase'
@@ -29,6 +29,29 @@ export function CreateGamePage() {
   const [creating, setCreating] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const configRef = useRef<HTMLDivElement>(null)
+  const pageBottomRef = useRef<HTMLDivElement>(null)
+
+  // Scroll to config form when a playlist is successfully loaded
+  useEffect(() => {
+    if (!playlistData) return
+    const timer = setTimeout(
+      () => configRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+      150
+    )
+    return () => clearTimeout(timer)
+  }, [playlistData])
+
+  // Scroll to bottom on error so the user sees the message
+  useEffect(() => {
+    if (!error) return
+    const timer = setTimeout(
+      () => pageBottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }),
+      100
+    )
+    return () => clearTimeout(timer)
+  }, [error])
+
   async function handlePlaylistSelect(spotifyId: string) {
     setSelectedSpotifyId(spotifyId)
     setPlaylistData(null)
@@ -36,17 +59,47 @@ export function CreateGamePage() {
     setError(null)
 
     try {
-      const res = await fetch(`${SUPABASE_URL}/functions/v1/spotify-get-playlist-tracks`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({ spotify_playlist_id: spotifyId }),
-      })
-      if (!res.ok) throw new Error('fetch_failed')
-      const data: SpotifyPlaylistTracksResponse = await res.json()
-      setPlaylistData(data)
+      // Check if this is a preset playlist.
+      // Spotify editorial playlists (owner = Spotify) are blocked in dev mode since Nov 2024.
+      // Preset playlists serve their tracks directly from the preset_tracks table.
+      const { data: pl } = await supabase
+        .from('playlists')
+        .select('id, is_preset, name, image_url, owner_name')
+        .eq('spotify_id', spotifyId)
+        .single()
+
+      if (pl?.is_preset) {
+        const { count, error: ptErr } = await supabase
+          .from('preset_tracks')
+          .select('*', { count: 'exact', head: true })
+          .eq('playlist_id', pl.id)
+        if (ptErr) throw ptErr
+
+        setPlaylistData({
+          playlist: {
+            spotify_id: spotifyId,
+            name: pl.name,
+            image_url: pl.image_url ?? undefined,
+            owner_name: pl.owner_name ?? 'Spotify',
+          },
+          tracks: [],
+          total_tracks: count ?? 30,
+          tracks_with_preview: count ?? 30,
+        })
+      } else {
+        // User playlist: fetch tracks from the Spotify edge function
+        const res = await fetch(`${SUPABASE_URL}/functions/v1/spotify-get-playlist-tracks`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({ spotify_playlist_id: spotifyId }),
+        })
+        if (!res.ok) throw new Error('fetch_failed')
+        const data: SpotifyPlaylistTracksResponse = await res.json()
+        setPlaylistData(data)
+      }
     } catch {
       setError(t('errors.generic'))
     } finally {
@@ -58,7 +111,7 @@ export function CreateGamePage() {
     if (!playlistData || !selectedSpotifyId || !alias.trim()) return
 
     const needed = boardSize * boardSize
-    if (playlistData.tracks_with_preview < needed) {
+    if (playlistData.total_tracks < needed) {
       setError(t('errors.notEnoughTracks'))
       return
     }
@@ -107,9 +160,10 @@ export function CreateGamePage() {
 
       if (boardErr || !board) throw boardErr ?? new Error('no_board')
 
-      // 6. Guardar sesión
+      // 6. Guardar sesión y re-hidratar el store antes de navegar
       reset()
       saveSession({ game_code: code, player_id: player.id, board_id: board.id, is_host: true })
+      useGameStore.getState().initFromSession()
 
       navigate(`/sala/${code}`)
     } catch {
@@ -120,7 +174,7 @@ export function CreateGamePage() {
 
   const canCreate =
     !!playlistData &&
-    playlistData.tracks_with_preview >= boardSize * boardSize &&
+    playlistData.total_tracks >= boardSize * boardSize &&
     !!alias.trim()
 
   return (
@@ -151,7 +205,7 @@ export function CreateGamePage() {
         </section>
 
         {playlistData && (
-          <section className={styles.section}>
+          <section ref={configRef} className={styles.section}>
             <GameConfigForm
               boardSize={boardSize}
               onBoardSizeChange={setBoardSize}
@@ -165,7 +219,18 @@ export function CreateGamePage() {
         )}
 
         {error && <p className={styles.error}>{error}</p>}
+        <div ref={pageBottomRef} />
       </div>
+
+      <button
+        type="button"
+        className={styles.scrollToTop}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        aria-label={t('common.scrollToTop')}
+        title={t('common.scrollToTop')}
+      >
+        ↑
+      </button>
     </Layout>
   )
 }

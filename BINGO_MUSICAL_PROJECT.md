@@ -9,9 +9,10 @@
 | Capa | Tecnología |
 |---|---|
 | Frontend | React 18 + Vite |
-| Estilos | CSS |
+| Estilos | CSS Modules |
 | Base de datos / Backend | Supabase (PostgreSQL + Realtime + Edge Functions) |
-| Música | Spotify Web API (Client Credentials Flow — solo lectura, sin login de usuarios) |
+| Metadatos musicales | Spotify Web API (Client Credentials Flow — solo metadatos/lista de canciones) |
+| Audio previews | Deezer API (sin autenticación, busca por artista+título, devuelve MP3 30s) |
 | Internacionalización | i18next + react-i18next |
 | Routing | React Router v6 |
 | Estado global | Zustand |
@@ -30,21 +31,37 @@
 
 ---
 
-## 3. Decisión de arquitectura clave: datos de Spotify al vuelo
+## 3. Arquitectura de datos y audio
 
-> ⚠️ Leer esto antes de implementar cualquier cosa relacionada con Spotify o la base de datos.
+### 3.1 Metadatos (Spotify)
 
 **Las canciones de Spotify NO se cachean en ninguna tabla global.** Las razones son:
 
 1. Playlists como el Top 50 se actualizan semanalmente. Una caché permanente quedaría desactualizada.
-2. Los `preview_url` de Spotify caducan. Si se guardan hoy y se usan en 2 semanas, estarán rotos.
+2. Los `preview_url` nativos de Spotify están deprecados y en la práctica devuelven `null` en la mayoría de canciones.
 
 **Solución adoptada (arquitectura híbrida):**
 
 - La tabla `playlists` solo guarda **metadatos ligeros** (spotify_id, nombre, imagen, is_preset). Sin tracks.
-- Al **crear una partida**, se llama a Spotify en ese momento, se obtienen las canciones actualizadas, y se guardan **desnormalizadas** en `game_tracks` (con todos los campos: nombre, artista, imagen, preview_url).
-- Los datos de Spotify quedan **inmutables dentro de la partida**: aunque Spotify cambie la playlist, la partida en curso no se ve afectada.
-- Con `ON DELETE CASCADE`, si se elimina una partida, todos sus datos de Spotify desaparecen solos.
+- Al **crear una partida**, se llama a Spotify en ese momento para obtener la lista de canciones actualizada.
+- Los metadatos (nombre, artista, imagen) quedan **inmutables dentro de la partida**: aunque Spotify cambie la playlist, la partida en curso no se ve afectada.
+
+### 3.2 Audio (Deezer)
+
+Los previews de 30 segundos se obtienen de **Deezer** a través de la Edge Function `deezer-get-preview`.
+
+- Deezer **no requiere autenticación** para búsquedas públicas.
+- La función recibe `{artist, title}` y devuelve la URL del MP3 (`preview` field de Deezer), que caduca en ~15 min.
+- La URL se solicita **justo en el momento de reproducir** cada canción, por lo que nunca está caducada.
+- **Solo el dispositivo del DJ escucha el audio.** `AudioPlayer` solo renderiza si `player.is_host = true`.
+- La búsqueda tiene dos intentos: preciso (`artist:"X" track:"Y"`) y libre (`X Y`).
+
+```
+Edge Function: deezer-get-preview
+Método: POST
+Body: { artist: string, title: string }
+Respuesta: { preview_url: string|null, deezer_id, matched_title, matched_artist }
+```
 
 ---
 
@@ -130,6 +147,22 @@ SPOTIFY_CLIENT_SECRET=
 
 ### 6.2 Edge Functions necesarias
 
+**`deezer-get-preview`** — Busca el preview MP3 de una canción en Deezer
+```
+POST /functions/v1/deezer-get-preview
+Body: { artist: string, title: string }
+
+Respuesta:
+{
+  preview_url: string | null,   // URL MP3 30s, caduca en ~15 min
+  deezer_id: number | null,
+  matched_title: string | null,
+  matched_artist: string | null
+}
+```
+
+No requiere credenciales. Se llama justo antes de reproducir cada canción para obtener una URL fresca.
+
 **`spotify-search`** — Busca playlists públicas por texto
 ```
 GET /functions/v1/spotify-search?q={query}
@@ -146,7 +179,7 @@ Respuesta:
 ]
 ```
 
-**`spotify-get-playlist-tracks`** — Obtiene las tracks de una playlist con preview_url válido
+**`spotify-get-playlist-tracks`** — Obtiene las tracks de una playlist
 ```
 POST /functions/v1/spotify-get-playlist-tracks
 Body: { spotify_playlist_id: string }
@@ -158,18 +191,18 @@ Respuesta:
     {
       spotify_id: string,
       name: string,
-      artist: string,       // artistas concatenados con ", "
+      artist: string,          // artistas concatenados con ", "
       album_name: string,
       album_image_url: string,
-      preview_url: string,  // solo tracks con preview_url válido
+      preview_url: string | null  // deprecado en Spotify, casi siempre null
     }
   ],
-  total_tracks: number,     // total en la playlist
-  tracks_with_preview: number  // solo las que tienen preview
+  total_tracks: number,
+  tracks_with_preview: number
 }
 ```
 
-> Esta Edge Function filtra automáticamente las canciones sin `preview_url`. El frontend debe advertir si `tracks_with_preview` es menor que `board_size²` (número mínimo para jugar).
+> **⚠️ Nota técnica sobre el campo `track` vs `item`:** El endpoint `/playlists/{id}/items` (sustituto del deprecated `/playlists/{id}/tracks`) sigue devolviendo cada elemento con el campo `track` en el JSON de respuesta. El nombre del campo en la respuesta NO cambió, solo cambió la URL del endpoint. El parámetro `fields` también debe usar `items(track(...))`, no `items(item(...))`.
 
 ### 6.3 Formatos de URL/URI aceptados
 
@@ -333,17 +366,18 @@ VITE_SUPABASE_ANON_KEY=
 1. El DJ pulsa "Siguiente canción"
 2. Se incrementa `games.current_track_index` en +1
 3. Se actualiza `game_tracks.played_at = NOW()` para esa canción
-4. Todos los jugadores reciben el update via Realtime y ven la canción en `NowPlaying`
-5. El `AudioPlayer` reproduce automáticamente el `preview_url` de la canción actual
-6. **El audio solo suena en el dispositivo del DJ.** El componente `AudioPlayer` solo renderiza si `player.is_host = true`.
+4. **Durante los primeros 10 segundos** la canción no revela su info (título, artista, portada) — solo suena música. El hook `useTrackReveal` controla este temporizador client-side desde que cambia el `track.id`.
+5. Pasados 10 segundos, todos los jugadores ven la info de la canción en `NowPlaying`.
+6. El audio solo suena en el dispositivo del DJ via el componente `AudioPlayer` (solo renderiza si `is_host = true`).
+7. La URL de preview se obtiene de Deezer al vuelo via edge function `deezer-get-preview` en el momento de reproducir.
 
 ### 8.6 Marcar canciones en el cartón
 
-1. El jugador toca una celda de su cartón
-2. Solo se puede marcar si esa canción ya ha sido reproducida (`played_at IS NOT NULL` en `game_tracks`)
-3. Si la canción aún no ha sonado, la celda no responde al toque (o muestra un feedback visual de "aún no")
-4. Al marcar: insertar fila en `board_marks` con `(board_id, game_id, play_order)`
-5. El frontend actualiza visualmente la celda como marcada
+1. El jugador hace clic en una celda de su cartón en cualquier momento.
+2. **No hay marcado automático.** Si la canción ya salió y el jugador no la marcó, pierde la oportunidad.
+3. Todas las celdas son clickables desde el inicio (no hay estado “idle/bloqueado” por “aún no ha sonado”).
+4. Al marcar: insertar fila en `board_marks` con `(board_id, game_id, play_order)`.
+5. La celda gira con animación 3D (flip card) mostrando el checkmark. No puede desmarcarse.
 
 ### 8.7 Detección de línea y bingo
 

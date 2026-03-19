@@ -16,6 +16,13 @@
   user-select: none;
 }
 
+/* On small screens hide completely — avatars only for desktop/tablet */
+@media (max-width: 768px) {
+  .container {
+    display: none;
+  }
+}
+
 @keyframes floatBob {
   0%   { transform: translateY(0)    rotate(-6deg) scale(1); }
   25%  { transform: translateY(-16px) rotate(4deg)  scale(1.06); }

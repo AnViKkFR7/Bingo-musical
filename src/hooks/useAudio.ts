@@ -1,20 +1,23 @@
 import { useEffect, useRef, useCallback, useState } from 'react'
 import { useGameStore } from '../store/gameStore'
+import { supabase } from '../lib/supabase'
 
 /**
- * Controla la reproducción de audio del preview de Spotify.
+ * Controla la reproducción de audio del preview de Deezer.
  * SOLO se usa en el dispositivo del DJ (is_host = true).
- * Los jugadores nunca instancian este hook para reproducir audio.
+ * Llama al edge function deezer-get-preview para obtener una URL fresca
+ * cada vez que cambia la canción (las URLs de Deezer caducan en ~15 min).
  */
 export function useAudio() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState(0)   // 0–100
   const [hasError, setHasError] = useState(false)
+  const [isFetchingPreview, setIsFetchingPreview] = useState(false)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 
   const getCurrentTrack = useGameStore(s => s.getCurrentTrack)
   const currentTrack = getCurrentTrack()
-  const previewUrl = currentTrack?.preview_url ?? null
 
   // Crear / destruir el elemento <audio> una sola vez
   useEffect(() => {
@@ -29,12 +32,39 @@ export function useAudio() {
     }
   }, [])
 
-  // Cambiar fuente cuando cambia la canción
+  // Obtener URL de preview fresca de Deezer cuando cambia la canción
+  useEffect(() => {
+    if (!currentTrack?.name || !currentTrack?.artist) {
+      setPreviewUrl(null)
+      return
+    }
+
+    let cancelled = false
+    setPreviewUrl(null)
+    setIsFetchingPreview(true)
+    setHasError(false)
+
+    supabase.functions.invoke('deezer-get-preview', {
+      body: { artist: currentTrack.artist, title: currentTrack.name },
+    }).then(({ data, error }) => {
+      if (cancelled) return
+      setIsFetchingPreview(false)
+      if (!error && data?.preview_url) {
+        setPreviewUrl(data.preview_url)
+      } else {
+        setPreviewUrl(null)
+        if (error) setHasError(true)
+      }
+    })
+
+    return () => { cancelled = true }
+  }, [currentTrack?.id])
+
+  // Cargar y reproducir automáticamente cuando la URL esté lista
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
 
-    setHasError(false)
     setProgress(0)
 
     if (!previewUrl) {
@@ -112,6 +142,8 @@ export function useAudio() {
     isPlaying,
     progress,
     hasError,
+    isFetchingPreview,
+    previewUrl,
     play,
     pause,
     togglePlay,

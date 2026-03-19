@@ -25,7 +25,9 @@
     "selectedPlaylist": "Playlist selezionata",
     "changePlaylist": "Cambia playlist",
     "step1": "Scegli playlist",
-    "step2": "Configura la partita"
+    "step2": "Configura la partita",
+    "showMore": "Mostra altro",
+    "showLess": "Mostra meno"
   },
   "join": {
     "title": "Unisciti a una partita",
@@ -95,6 +97,7 @@
     "yes": "Sì",
     "no": "No",
     "by": "di",
-    "tracks": "canzoni"
+    "tracks": "canzoni",
+    "scrollToTop": "Vai in cima"
   }
 }

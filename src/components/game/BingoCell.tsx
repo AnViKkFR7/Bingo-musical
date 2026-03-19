@@ -13,7 +13,7 @@ export function BingoCell({ cell, boardId, gameId }: Props) {
   const [marking, setMarking] = useState(false)
 
   async function handleClick() {
-    if (cell.isMarked || !cell.isPlayed || marking) return
+    if (cell.isMarked || marking) return
     setMarking(true)
     await supabase.from('board_marks').insert({
       board_id: boardId,
@@ -23,14 +23,13 @@ export function BingoCell({ cell, boardId, gameId }: Props) {
     setMarking(false)
   }
 
-  const isClickable = cell.isPlayed && !cell.isMarked
+  const isClickable = !cell.isMarked
 
   return (
     <div
       className={[
         styles.wrapper,
         cell.isMarked ? styles.flipped : '',
-        !cell.isPlayed ? styles.idle : '',
         isClickable ? styles.clickable : '',
         marking ? styles.marking : '',
       ]
@@ -46,7 +45,6 @@ export function BingoCell({ cell, boardId, gameId }: Props) {
       <div className={styles.inner}>
         {/* FRONT */}
         <div className={styles.front}>
-          <span className={styles.playOrder}>{cell.play_order}</span>
           {cell.track.album_image_url ? (
             <img
               src={cell.track.album_image_url}
@@ -59,7 +57,7 @@ export function BingoCell({ cell, boardId, gameId }: Props) {
           )}
           <div className={styles.info}>
             <span className={styles.trackName}>{cell.track.name}</span>
-            <span className={styles.artist}>— {cell.track.artist}</span>
+            <span className={styles.artist}>{cell.track.artist}</span>
           </div>
         </div>
 

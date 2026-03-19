@@ -40,8 +40,8 @@ interface SpotifyTrack {
 }
 
 interface SpotifyPlaylistTrackItem {
-  // 'item' is the current field; 'track' was deprecated in the Spotify API
-  item: SpotifyTrack | null
+  // Both /tracks and /items endpoints return 'track' as the field name for music tracks
+  track: SpotifyTrack | null
 }
 
 // ── Spotify Client Credentials ────────────────────────────────────────────────
@@ -94,7 +94,7 @@ async function fetchAllTracks(
   // preview_url is deprecated by Spotify and may be null for most tracks.
   let url: string | null =
     `https://api.spotify.com/v1/playlists/${playlistId}/items` +
-    `?fields=next,items(item(id,name,artists,album,preview_url))&limit=100`
+    `?fields=next,items(track(id,name,artists,album,preview_url))&limit=100`
 
   while (url) {
     const res: Response = await fetchWithRetry(url, {
@@ -185,7 +185,7 @@ serve(async (req: Request) => {
     // (null si no disponible) para que el cliente lo use cuando esté presente.
     const seenIds = new Set<string>()
     const tracks = allItems
-      .map(item => item.item)  // 'item' es el campo actual (no el deprecado 'track')
+      .map(item => item.track)  // 'track' is the field name in both /tracks and /items endpoints
       .filter((track): track is SpotifyTrack => {
         if (!track || !track.id) return false
         if (seenIds.has(track.id)) return false
